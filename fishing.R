@@ -37,7 +37,6 @@ library(ggeffects)
 library(marginaleffects)
 library(rpart)
 library(rpart.plot)
-#library(randomForest)
 
 `%notin%` <- Negate(`%in%`)
 
@@ -1360,17 +1359,30 @@ res.desc[[2]]
 # Multinomial Logistic Regression Model
 
 unique(survey$a)
-df.mod <- survey[, c("fiche_n"
+df.mod <- survey[, c(
+                  #short model
+                  "fiche_n"
                   , "a" 
                   , "mod_peche"
                   , "res_tour"
                   , "z_1","z_2","z_3","z_4","z_6","z_7","z_8","z_9","z_54","z_55","z_56","z_57","z_58","z_59","z_60","z_61"
-                  , "Temps_peche_estime")]
+                  , "Temps_peche_estime"
+                  # large model
+                  , "age_moyen" 
+                  , "cat_pro" 
+                  , "nb_sort_an" 
+                  , "avis_pnm"
+                  , "dep_pdb", "dep_pe", "dep_csm", "dep_po"
+                  , "aube", "matin", "soir", "crepuscule", "nuit", "apm", "journee", "nimp_q"
+                  , "poss_bat"
+                  , "Temps_peche_effectif"
+                  )]
 
 df.mod$a <- factor(df.mod$a, levels = c("2020", "2021", "2022", "2023", "2024"))
 
+# for model short
+
 unique(df.mod$mod_peche)
-df.mod %>% filter(mod_peche != "pdb, csm") -> df.mod
 table(df.mod$mod_peche)
 df.mod$mod_peche <- ifelse(df.mod$mod_peche == "csm", "chasse sous-marine", df.mod$mod_peche)
 df.mod$mod_peche <- ifelse(df.mod$mod_peche == "pdb", "peche du bord", df.mod$mod_peche)
@@ -1419,7 +1431,7 @@ df.spatial <- data.frame(df.spatial)
 names(df.spatial)[names(df.spatial) == "concatenated_values"] <- "zone"
 
 df.mod <- bind_cols(df.mod, df.spatial[,c("fiche_n", "zone")])
-df.mod <- subset(df.mod, select = -c(fiche_n...22))
+df.mod <- subset(df.mod, select = -c(fiche_n...40))
 names(df.mod)[names(df.mod) == "fiche_n...1"] <- "fiche_n"
 rm(df.spatial)
 unique(df.mod$zone); length(na.omit(df.mod$zone)) ; table(df.mod$zone) ; table(df.mod$a, df.mod$zone)
@@ -1452,23 +1464,312 @@ for (i in 1:length(df.mod$Temps_peche_estime.30min)) {
 unique(df.mod$Temps_peche_estime.cat2h); length(na.omit(df.mod$Temps_peche_estime.cat2h)) ; table(df.mod$Temps_peche_estime.cat2h) ; table(df.mod$a, df.mod$Temps_peche_estime.cat2h)  
 df.mod$Temps_peche_estime.cat2h <- as.factor(df.mod$Temps_peche_estime.cat2h)
 
-filter(df.mod, a != "2024") -> df.mod
-filter(df.mod, mod_peche != "peche à l'oursin") -> df.mod
-# Set the reference group for mod_peche bord to be peche du
-df.mod$mod_peche <- relevel(df.mod$mod_peche, ref = "peche du bord")
-
 nrow(na.omit((filter(df.mod, as.character(df.mod$a) != "NA"))[,"a"]))
 nrow(na.omit((filter(df.mod, as.character(df.mod$mod_peche) != "NA"))[,"mod_peche"]))
 nrow(na.omit((filter(df.mod, as.character(df.mod$res_tour) != "NA"))[,"res_tour"]))
 nrow(na.omit((filter(df.mod, as.character(df.mod$Temps_peche_estime.cat2h) != "NA"))[,"Temps_peche_estime.cat2h"]))
 nrow(na.omit((filter(df.mod, as.character(df.mod$zone.gp) != "NA"))[,"zone.gp"]))
 
+# for model large
+
+unique(df.mod$poss_bat); length(na.omit(df.mod$poss_bat)) ; table(df.mod$poss_bat) ; table(df.mod$a, df.mod$poss_bat) 
+df.mod$poss_bat <- ifelse(df.mod$poss_bat == "NA", NA, df.mod$poss_bat)
+unique(df.mod$poss_bat); length(na.omit(df.mod$poss_bat)) ; table(df.mod$poss_bat) ; table(df.mod$a, df.mod$poss_bat)  
+
+df.mod %>%
+  mutate(Temps_peche_effectif.30min = if_else(Temps_peche_effectif < parse_hms("00:30:00"), NA, as_hms(Temps_peche_effectif))) -> df.mod
+
+df.mod$Temps_peche_effectif.cat2h <- NA
+for (i in 1:length(df.mod$Temps_peche_effectif.30min)) {
+  #i=1
+  if (as.numeric(df.mod[i, "Temps_peche_effectif.30min"]) < as.numeric(as.hms("02:00:00")) & !is.na(df.mod[i, "Temps_peche_effectif.30min"])) {
+    df.mod[i, "Temps_peche_effectif.cat2h"] <- "<2h"
+  } else if (as.numeric(df.mod[i, "Temps_peche_effectif.30min"]) >= as.numeric(as.hms("02:00:00")) & !is.na(df.mod[i, "Temps_peche_effectif.30min"])) {
+    df.mod[i, "Temps_peche_effectif.cat2h"]  <- ">=2h"
+  }  else if (is.na(df.mod[i, "Temps_peche_effectif.30min"])) {
+    df.mod[i, "Temps_peche_effectif.cat2h"]  <- NA
+  } 
+  rm(i)
+}
+
+df.mod %>%
+  mutate(Temps_peche_estime.30min = if_else(Temps_peche_estime < parse_hms("00:30:00"), NA, as_hms(Temps_peche_estime))) -> df.mod
+
+df.mod$Temps_peche_estime.cat2h <- NA
+for (i in 1:length(df.mod$Temps_peche_estime.30min)) {
+  #i=1
+  if (as.numeric(df.mod[i, "Temps_peche_estime.30min"]) < as.numeric(as.hms("02:00:00")) & !is.na(df.mod[i, "Temps_peche_estime.30min"])) {
+    df.mod[i, "Temps_peche_estime.cat2h"] <- "<2h"
+  } else if (as.numeric(df.mod[i, "Temps_peche_estime.30min"]) >= as.numeric(as.hms("02:00:00")) & !is.na(df.mod[i, "Temps_peche_estime.30min"])) {
+    df.mod[i, "Temps_peche_estime.cat2h"]  <- ">=2h"
+  }  else if (is.na(df.mod[i, "Temps_peche_estime.30min"])) {
+    df.mod[i, "Temps_peche_estime.cat2h"]  <- NA
+  } 
+  rm(i)
+}
+
+unique(df.mod$Temps_peche_effectif.cat2h); length(na.omit(df.mod$Temps_peche_effectif.cat2h)) ; table(df.mod$Temps_peche_effectif.cat2h) ; table(df.mod$a, df.mod$Temps_peche_effectif.cat2h)  
+unique(df.mod$Temps_peche_estime.cat2h); length(na.omit(df.mod$Temps_peche_estime.cat2h)) ; table(df.mod$Temps_peche_estime.cat2h) ; table(df.mod$a, df.mod$Temps_peche_estime.cat2h)  
+
+df.time <- survey[, c("fiche_n","aube", "matin", "soir", "crepuscule", "nuit", "apm", "journee", "nimp_q")]
+summary(df.time[,-1])
+
+replace_values <- function(column_name, data) {
+  if (column_name == "aube") {
+    data[data == 1] <- "aube"
+  } else if (column_name == "matin") {
+    data[data == 1] <- "matin"
+  }  else if (column_name == "soir") {
+    data[data == 1] <- "soir"
+  }  else if (column_name == "crepuscule") {
+    data[data == 1] <- "crepuscule"
+  }  else if (column_name == "nuit") {
+    data[data == 1] <- "nuit"
+  }  else if (column_name == "apm") {
+    data[data == 1] <- "apm"
+  }  else if (column_name == "journee") {
+    data[data == 1] <- "journee"
+  }  else if (column_name == "nimp_q") {
+    data[data == 1] <- "nimp_q"
+  } 
+  return(data)
+}
+
+cols_to_replace <- c("aube", "matin", "soir", "crepuscule", "nuit", "apm", "journee", "nimp_q")
+df.time[cols_to_replace] <- lapply(cols_to_replace, function(col) replace_values(col, df.time[[col]]))
+
+concatenate_unique <- function(row) {
+  values <- as.character(row)
+  values <- values[values != "0"]
+  unique_values <- unique(values)
+  paste(unique_values, collapse = ", ")
+}
+
+df.time <- df.time %>%
+  rowwise() %>%
+  mutate(concatenated_values = concatenate_unique(c_across(2:9)))
+df.time <- data.frame(df.time)
+for (i in 1:nrow(df.time)) {
+  df.time[i,"concatenated_values"] <- ifelse(
+    df.time[i,"aube"]=="0" 
+    & df.time[i,"matin"]=="0" 
+    & df.time[i,"soir"]=="0" 
+    & df.time[i,"crepuscule"]=="0" 
+    & df.time[i,"nuit"]=="0" 
+    & df.time[i,"apm"]=="0" 
+    & df.time[i,"journee"]=="0" 
+    & df.time[i,"nimp_q"]=="0"
+    & df.time[i,"concatenated_values"]==""
+    , "0", df.time[i,"concatenated_values"]) 
+}
+df.time[,"concatenated_values"]  <- ifelse(df.time[,"concatenated_values"] == "NA", NA, df.time[,"concatenated_values"] )
+names(df.time)[names(df.time) == "concatenated_values"] <- "time.day"
+table(df.time[,2:10])
+
+df.mod <- bind_cols(df.mod, df.time[,c("fiche_n", "time.day")])
+df.mod <- subset(df.mod, select = -c(fiche_n...46))
+names(df.mod)[names(df.mod) == "fiche_n...1"] <- "fiche_n"
+rm(df.time,i)
+
+unique(df.mod$time.day); length(na.omit(df.mod$time.day)) ; table(df.mod$time.day) ; table(df.mod$a, df.mod$time.day)
+
+df.mod$time.day.gp <- df.mod$time.day
+df.mod$time.day.gp <- ifelse(df.mod$time.day.gp %in% c("aube", "matin"), "am", df.mod$time.day.gp)
+df.mod$time.day.gp <- ifelse(df.mod$time.day.gp %in% c("apm", "crepuscule", "soir"), "pm", df.mod$time.day.gp)
+df.mod$time.day.gp <-  ifelse(df.mod$time.day.gp %notin% c("0", "NA",
+                                                     "am", "pm", "nimp_q") 
+                           & !is.na(df.mod$time.day.gp), "nimp_q", df.mod$time.day.gp)
+
+unique(df.mod$time.day.gp); length(na.omit(df.mod$time.day.gp)) ; table(df.mod$time.day.gp) ; table(df.mod$a, df.mod$time.day.gp)
+# remove the variable level "0" that makes no sense
+df.mod$time.day.gp <- ifelse(df.mod$time.day.gp == "0", NA, df.mod$time.day.gp)
+unique(df.mod$time.day.gp); length(na.omit(df.mod$time.day.gp)) ; table(df.mod$time.day.gp) ; table(df.mod$a, df.mod$time.day.gp)
+
+df.mod <- add_column(df.mod, age_classe = NA, .after = "age_moyen")
+df.mod$age_classe <- as.character(df.mod$age_classe)
+df.mod <- data.frame(df.mod)
+df.mod$age_classe <- ifelse(df.mod$age_moyen >= 60, "60 et plus", df.mod$age_classe) 
+df.mod$age_classe <- ifelse(df.mod$age_moyen >= 40 & df.mod$age_moyen < 60, "40-59", df.mod$age_classe)
+df.mod$age_classe <- ifelse(df.mod$age_moyen < 40, "13-40", df.mod$age_classe)
+unique(df.mod$age_classe)
+nrow(df.mod) ; length(na.omit(df.mod$age_classe))
+unique(df.mod$age_classe); length(na.omit(df.mod$age_classe)) ; table(df.mod$age_classe) ; table(df.mod$a, df.mod$age_classe)
+
+unique(df.mod$cat_pro)
+df.mod$cat_pro <- ifelse(df.mod$cat_pro == "NA", NA, df.mod$cat_pro)
+table(df.mod$cat_pro)
+nrow(df.mod) ; length(na.omit(df.mod$cat_pro))
+table(df.mod[, c("a", "cat_pro")])
+df.mod$cat_pro.gp <- df.mod$cat_pro
+df.mod$cat_pro.gp <- ifelse(df.mod$cat_pro.gp %in% c("sans_emploi", "en_arret", "etudiant"), "sans_emploi-en_arret-etudiant", df.mod$cat_pro.gp)
+table(df.mod$cat_pro.gp)
+unique(df.mod$cat_pro.gp); length(na.omit(df.mod$cat_pro.gp)) ; table(df.mod$cat_pro.gp) ; table(df.mod$a, df.mod$cat_pro.gp)
+
+unique(df.mod$avis_pnm)
+df.mod <- add_column(df.mod, classe_avis_pnm = df.mod$avis_pnm, .after = "avis_pnm")
+unique(df.mod$classe_avis_pnm)
+df.mod$classe_avis_pnm <- ifelse(df.mod$classe_avis_pnm == "NA", NA, df.mod$classe_avis_pnm)
+df.mod$classe_avis_pnm <- ifelse(df.mod$classe_avis_pnm == "_", NA, df.mod$classe_avis_pnm)
+df.mod$classe_avis_pnm <- ifelse(df.mod$classe_avis_pnm == "t_positif", "positif", df.mod$classe_avis_pnm)
+df.mod$classe_avis_pnm <- ifelse(df.mod$classe_avis_pnm == "t_negatif", "negatif", df.mod$classe_avis_pnm)
+df.mod$classe_avis_pnm <- ifelse(df.mod$classe_avis_pnm == "nsp", "p_avis", df.mod$classe_avis_pnm)
+table(df.mod$classe_avis_pnm)
+unique(df.mod$classe_avis_pnm); length(na.omit(df.mod$classe_avis_pnm)) ; table(df.mod$classe_avis_pnm) ; table(df.mod$a, df.mod$classe_avis_pnm)
+
+unique(df.mod$nb_sort_an)
+df.mod$nb_sort_an <- ifelse(df.mod$nb_sort_an == "NA", NA, df.mod$nb_sort_an)
+df.mod$nb_sort_an <- ifelse(df.mod$nb_sort_an == "illimite", 999, df.mod$nb_sort_an)
+table(df.mod$nb_sort_an) #or considering that variable as categorial, cfr idem classe_age? 
+nrow(df.mod) ; length(na.omit(df.mod$nb_sort_an))
+
+unique(df.mod$nb_sort_an); length(na.omit(df.mod$nb_sort_an)) ; table(df.mod$nb_sort_an) ; table(df.mod$a, df.mod$nb_sort_an) #no data for 2023
+df.mod$nb_sort_an <- as.numeric(df.mod$nb_sort_an)
+df.mod$nb_sort_an_cat <- cut(df.mod$nb_sort_an, breaks=quantile(df.mod$nb_sort_an, probs=0:3/3, na.rm = T), include.lowest=TRUE, labels=c(
+  paste0("Q1 (<=", 
+         #quantile(df.mod$nb_sort_an, probs=0:4/4, na.rm = T)[[1]], "-",
+         quantile(df.mod$nb_sort_an, probs=0:3/3, na.rm = T)[[2]], 
+         ")"), 
+  paste0("Q2 (", quantile(df.mod$nb_sort_an, probs=0:3/3, na.rm = T)[[2]]+1, "-", quantile(df.mod$nb_sort_an, probs=0:3/3, na.rm = T)[[3]], ")"), 
+  paste0("Q3 (>=", quantile(df.mod$nb_sort_an, probs=0:3/3, na.rm = T)[[3]]+1
+         ,")") ))
+unique(df.mod$nb_sort_an_cat); length(na.omit(df.mod$nb_sort_an_cat)) ; table(df.mod$nb_sort_an_cat) ; table(df.mod$a, df.mod$nb_sort_an_cat) 
+
+# dépenses
+# 1= "< 100 euros"; 2="entre 100-500 euros"; 3= "entre 500-1000 euros "; 4= "entre 1000-2000 euros ";5 ="supérieur à 2000"
+table(df.mod$dep_pdb)
+table(df.mod$dep_pe)
+table(df.mod$dep_csm)
+table(df.mod$dep_po)
+df.mod[, c("dep_pdb", "dep_pe", "dep_csm", "dep_po")] <- lapply(df.mod[, c("dep_pdb", "dep_pe", "dep_csm", "dep_po")], as.numeric)
+
+df.mod$dep <- NA
+df.mod$dep.median <- NA
+df.mod$dep.median.rd <- NA
+df.mod$dep_n <- NA
+for (i in 1:nrow(df.mod)) {
+  #i=1
+  dep. <- as.vector(unlist(df.mod[i, c("dep_pdb", "dep_pe", "dep_csm", "dep_po")]))
+  sort(dep.[na.omit(dep.)!=0])
+  df.mod[i,"dep"] <- paste0(sort(dep.[na.omit(dep.)!=0]), collapse=",")
+  df.mod[i,"dep.median"] <- median(dep.[na.omit(dep.)!=0])
+  df.mod[i,"dep.median.rd"] <- ceiling(df.mod[i,"dep.median"])
+  df.mod[i,"dep_n"] <- length(na.omit(dep.[dep.!=0]))
+}
+rm(dep.,i)
+table(df.mod$dep)
+
+arrange(unique(df.mod[, c("mod_peche", "dep_pdb", "dep_pe", "dep_csm", "dep_po")]), mod_peche)
+table(df.mod$dep.median.rd)
+
+df.mod$dep.mod_peche <- NA
+unique(df.mod$mod_peche)
+table(df.mod$mod_peche)
+
+#for (i in 1:nrow(df.mod)) {
+#  if(df.mod[i,"mod_peche"] == "peche du bord") {
+#    df.mod[i,"dep.mod_peche"] <- df.mod[i,"dep_pdb"]
+#  } else if (df.mod[i,"mod_peche"] == "peche embarquée") {
+#    df.mod[i,"dep.mod_peche"] <- df.mod[i,"dep_pe"]
+#  } else if (df.mod[i,"mod_peche"] == "chasse sous-marine") {
+#    df.mod[i,"dep.mod_peche"] <- df.mod[i,"dep_csm"]
+#  } else if (df.mod[i,"mod_peche"] == "peche à l'oursin") {
+#    df.mod[i,"dep.mod_peche"] <- df.mod[i,"dep_po"]
+#  } else {
+#    df.mod[i,"dep.mod_peche"] <- NA
+#  } 
+#}
+
+for (i in 1:nrow(df.mod)) {
+  df.mod[i,"dep.mod_peche"] <- ifelse(df.mod[i,"mod_peche"] == "peche du bord", df.mod[i,"dep_pdb"], df.mod[i,"dep.mod_peche"])
+  df.mod[i,"dep.mod_peche"] <- ifelse(df.mod[i,"mod_peche"] == "peche embarquée", df.mod[i,"dep_pe"], df.mod[i,"dep.mod_peche"])
+  df.mod[i,"dep.mod_peche"] <- ifelse(df.mod[i,"mod_peche"] == "chasse sous-marine", df.mod[i,"dep_csm"], df.mod[i,"dep.mod_peche"])
+  df.mod[i,"dep.mod_peche"] <- ifelse(df.mod[i,"mod_peche"] == "peche à l'oursin", df.mod[i,"dep_po"], df.mod[i,"dep.mod_peche"])
+  df.mod[i,"dep.mod_peche"] <- ifelse(df.mod[i,"mod_peche"] %notin% c("peche du bord", "peche embarquée", "chasse sous-marine", "peche à l'oursin"), NA, df.mod[i,"dep.mod_peche"])
+}
+
+df.mod[,c("mod_peche","dep_pdb", "dep_pe", "dep_csm", "dep_po", "dep.mod_peche")]
+
+df.mod$dep.mod_peche <- ifelse(df.mod$dep.mod_peche == 0, NA, df.mod$dep.mod_peche)
+unique(df.mod$dep.mod_peche); length(na.omit(df.mod$dep.mod_peche)) ; table(df.mod$dep.mod_peche) ; table(df.mod$a, df.mod$dep.mod_peche) #no data for 2023
+
+# 1= "< 100 euros"; 2="entre 100-500 euros"; 3= "entre 500-1000 euros"; 4= "entre 1000-2000 euros";5 ="supérieur à 2000"
+
+df.mod$dep.mod_peche.chr <- as.character(df.mod$dep.mod_peche)
+df.mod$dep.mod_peche.chr <- ifelse(is.na(df.mod$dep.mod_peche.chr), "NA", df.mod$dep.mod_peche.chr)
+for (i in 1:nrow(df.mod)) {
+  if (df.mod[i,"dep.mod_peche.chr"] %in% c("1", "2")) {
+    df.mod[i,"dep.mod_peche.chr"] <- "< 100-500 euros"
+  } else if (df.mod[i,"dep.mod_peche.chr"] %in% c("3", "4")) {
+    df.mod[i,"dep.mod_peche.chr"] <- "entre 500-2000 euros"
+  } else if (df.mod[i,"dep.mod_peche.chr"] == "5") {
+    df.mod[i,"dep.mod_peche.chr"] <- "> 2000 euros"
+  } else {
+    df.mod[i,"dep.mod_peche.chr"] <- NA
+  }
+}
+
+df.mod$dep.median.rd.chr <- as.character(df.mod$dep.median.rd)
+df.mod$dep.median.rd.chr <- ifelse(is.na(df.mod$dep.median.rd.chr), "NA", df.mod$dep.median.rd.chr)
+for (i in 1:nrow(df.mod)) {
+  if (df.mod[i,"dep.median.rd.chr"] %in% c("1", "2")) {
+    df.mod[i,"dep.median.rd.chr"] <- "< 100-500 euros"
+  } else if (df.mod[i,"dep.median.rd.chr"] %in% c("3", "4")) {
+    df.mod[i,"dep.median.rd.chr"] <- "entre 500-2000 euros"
+  } else if (df.mod[i,"dep.median.rd.chr"] == "5") {
+    df.mod[i,"dep.median.rd.chr"] <- "> 2000 euros"
+  } else {
+    df.mod[i,"dep.median.rd.chr"] <- NA
+  }
+}
+rm(i)
+
+df.mod$a <- as.factor(df.mod$a)
+df.mod$mod_peche <- as.factor(df.mod$mod_peche)
+df.mod$age_classe <- as.factor(df.mod$age_classe)
+df.mod$cat_pro.gp <- as.factor(df.mod$cat_pro.gp)
+df.mod$nb_sort_an <- as.numeric(df.mod$nb_sort_an)
+df.mod$classe_avis_pnm <- as.factor(df.mod$classe_avis_pnm)
+df.mod$res_tour <- as.factor(df.mod$res_tour)
+df.mod$poss_bat <- as.factor(df.mod$poss_bat)
+df.mod$Temps_peche_estime.cat2h <- as.factor(df.mod$Temps_peche_estime.cat2h)
+df.mod$Temps_peche_effectif.cat2h <- as.factor(df.mod$Temps_peche_effectif.cat2h)
+df.mod$time.day.gp <- as.factor(df.mod$time.day.gp)
+df.mod$zone.gp <- as.factor(df.mod$zone.gp)
+df.mod$nb_sort_an_cat <- as.factor(df.mod$nb_sort_an_cat)
+df.mod$dep.mod_peche.chr <- as.factor(df.mod$dep.mod_peche.chr)
+df.mod$dep.median.rd.chr <- as.factor(df.mod$dep.median.rd.chr)
+
+df.mod <- df.mod[, c("mod_peche" 
+           #short
+           ,"a"
+           ,"res_tour"
+           ,"Temps_peche_estime.cat2h" 
+           ,"zone.gp"
+           #large
+           ,"age_classe"
+           ,"cat_pro.gp"
+           ,"poss_bat" 
+           ,"time.day.gp" 
+           ,"nb_sort_an_cat" 
+           ,"dep.mod_peche.chr"
+           ,"classe_avis_pnm"
+           )]
+
+df.mod %>% filter(mod_peche != "pdb, csm") -> df.mod
+filter(df.mod, a != "2024") -> df.mod
+filter(df.mod, mod_peche != "peche à l'oursin") -> df.mod
+# Set the reference group for mod_peche bord to be peche du
+df.mod$mod_peche <- relevel(df.mod$mod_peche, ref = "peche du bord")
+df.mod <- droplevels(df.mod)
+
+# model short
+
 df.mod.short <- na.omit(df.mod[,c("mod_peche", 
           "a", 
           "res_tour",
           "Temps_peche_estime.cat2h", 
           "zone.gp")])
-saveRDS(df.mod.short, "df.mod.short.rds")
+#saveRDS(df.mod.short, "df.mod.short.rds")
 
 df.mod.short <- droplevels(df.mod.short)
 df.mod.short <- data.frame(df.mod.short)
@@ -1489,11 +1790,11 @@ summary_list <- lapply(categorical_vars, function(var) count_levels(df.mod.short
 names(summary_list) <- categorical_vars
 summary_list
 
-count_table <- df.mod.short %>%
+(count_table <- df.mod.short %>%
   group_by(a, #sexe, 
            res_tour, Temps_peche_estime.cat2h, zone.gp) %>%
   summarise(count = n()) %>%
-  ungroup()
+  ungroup())
 
 multinom_model.short <- multinom(mod_peche ~ ., data = df.mod.short)
 summary(multinom_model.short)
@@ -1536,7 +1837,7 @@ table(testing$mod_peche)
 
 multinom_model.training <- multinom(mod_peche ~ . - res_tour, data = training)
 
-# Confusion matrix and misclassification error - taining data
+# Confusion matrix and misclassification error - training data
 (p <- predict(multinom_model.training, training))
 (tab <- table(p, training$mod_peche))
 1 - sum(diag(tab))/sum(tab) # misclassification
@@ -1670,57 +1971,17 @@ paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.short.re
 # Fit a decision tree
 # http://www.milbo.org/rpart-plot/prp.pdf
 
-
 tree_model <- rpart(mod_peche ~ . - res_tour, data = df.mod.short, method = "class")
 rpart.plot(tree_model, type = 4, extra = 2)
 
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red")))
 
-length(na.omit((filter(df.mod, as.character(df.mod$age_classe) != "NA"))[,"age_classe"]))
-length(na.omit((filter(df.mod, as.character(df.mod$cat_pro.gp) != "NA"))[,"cat_pro.gp"]))
-length(na.omit((filter(df.mod, as.character(df.mod$classe_avis_pnm) != "NA"))[,"classe_avis_pnm"]))
-length(na.omit((filter(df.mod, as.character(df.mod$poss_bat) != "NA"))[,"poss_bat"]))
-length(na.omit((filter(df.msa, as.character(df.msa$time.day.gp) != "NA"))[,"time.day.gp"]))
-length(na.omit((filter(df.msa, as.character(df.msa$nb_sort_an_cat) != "NA"))[,"nb_sort_an_cat"]))
-length(na.omit((filter(df.msa, as.character(df.msa$dep.mod_peche.chr) != "NA"))[,"dep.mod_peche.chr"]))
+# model large
 
-df.mod.full <- na.omit(df.mod[,c("mod_peche", 
-          "a",
-          "age_classe",
-          "cat_pro.gp", 
-          "sexe", 
-          "res_tour", 
-          "poss_bat", 
-          "Temps_peche_estime.cat2h", 
-          "time.day.gp", 
-          "zone.gp", 
-          "nb_sort_an_cat", 
-          "dep.mod_peche.chr",
-          "classe_avis_pnm")])  
-df.mod.full <- droplevels(df.mod.full)
-df.mod.full <- data.frame(df.mod.full)
+df.mod.large <- na.omit(df.mod)
 
-multinom_model.full <- multinom(mod_peche ~ 
-                             a
-                           + age_classe  
-                           + cat_pro.gp 
-                           + sexe 
-                           + res_tour 
-                           + poss_bat 
-                           + Temps_peche_estime.cat2h 
-                           + time.day.gp 
-                           + zone.gp 
-                           + nb_sort_an_cat 
-                           + dep.mod_peche.chr
-                           + classe_avis_pnm
-                           , data = df.mod.full)
-summary(multinom_model.full)
-#interpret the coefficients in terms of odds ratios
-exp(coef(multinom_model.full))
-(multinom.tbl.full <- tidy(multinom_model.full, conf.int = TRUE))
-(multinom.tbl.full.sign <- filter(multinom.tbl.full, p.value < 0.05))
-
-
-
+df.mod.large <- droplevels(df.mod.large)
+df.mod.large <- data.frame(df.mod.large)
 
 # Function to count observations for each level of a factor variable
 count_levels <- function(df, var_name) {
@@ -1731,81 +1992,180 @@ count_levels <- function(df, var_name) {
     arrange(desc(count))
 }
 # List of categorical variables to summarize
-categorical_vars <- c("a", #"sexe", 
-                      "res_tour", "Temps_peche_estime.cat2h", "zone.gp")
+categorical_vars <- c("a", "res_tour", "Temps_peche_estime.cat2h", "zone.gp",
+                      "age_classe" ,"cat_pro.gp", "poss_bat", "time.day.gp", "nb_sort_an_cat", "dep.mod_peche.chr", "classe_avis_pnm")
+
 # Summarize counts for each categorical variable
-summary_list <- lapply(categorical_vars, function(var) count_levels(df.mod.short, var))
+summary_list <- lapply(categorical_vars, function(var) count_levels(df.mod.large, var))
 # Display summaries
 names(summary_list) <- categorical_vars
 summary_list
 
-count_table <- df.mod.short %>%
-  group_by(a, #sexe, 
-           res_tour, Temps_peche_estime.cat2h, zone.gp) %>%
-  summarise(count = n()) %>%
-  ungroup()
+filter(df.mod.large, classe_avis_pnm != "negatif") -> df.mod.large
+df.mod.large <- droplevels(df.mod.large)
 
-# stepwize regression for Multinomial Logistic Regression Model
+(count_table <- df.mod.large %>%
+    group_by(a, res_tour, Temps_peche_estime.cat2h, zone.gp,
+             age_classe ,cat_pro.gp, poss_bat, time.day.gp, nb_sort_an_cat, dep.mod_peche.chr, classe_avis_pnm) %>%
+    summarise(count = n()) %>%
+    ungroup())
+
+multinom_model.large <- multinom(mod_peche ~ . 
+                                 #-poss_bat
+                                 , data = df.mod.large)
+summary(multinom_model.large)
+#interpret the coefficients in terms of odds ratios
+exp(coef(multinom_model.large))
+(multinom.tbl.large <- tidy(multinom_model.large, conf.int = TRUE))
+(multinom.tbl.large.sign <- filter(multinom.tbl.large, p.value < 0.05))
+
+#Messages d'avis :
+#1: Dans sqrt(diag(vc)) : Production de NaN
+#2: Dans sqrt(diag(vcov(object))) : Production de NaN
+# All of the observations are zero for some combination of factors. Thus any coefficient that involves a comparison with this state will have a parameter value of large magnitude (i.e. abs(beta) >> 1); it should theoretically be infinite, but is usually somewhere between 10 and 30 (depending on where the numerical methods give up). These coefficients will either have ridiculously large standard errors and (Wald) confidence intervals, or (as in your case) NaN values (https://stackoverflow.com/questions/67338560/zeroinfl-model-warning-message-in-sqrtdiagobjectvcov-nans-produced)
+
+#https://www.youtube.com/@bkrai
+#https://www.youtube.com/watch?v=S2rZp4L_nXo
+#https://www.youtube.com/watch?v=oxRy2DMrOF4
+#https://www.youtube.com/watch?v=11VY8CmNVDQ
+#https://www.youtube.com/watch?v=POyTaeneHJY
+
+#2-tailed Z-test (idem result than with above tidy function on model)
+z <- summary(multinom_model.large)$coefficient/summary(multinom_model.large)$standard.errors
+(p <- (1 - pnorm(abs(z), 0, 1)) * 2)
+
+multinom_model.large.sign <- multinom(mod_peche ~ . -a -res_tour -cat_pro.gp -time.day.gp
+                                      #- poss_bat -res_tour -classe_avis_pnm -Temps_peche_estime.cat2h -cat_pro.gp
+                                      , data = df.mod.large)
+summary(multinom_model.large.sign)
+
+z <- summary(multinom_model.large.sign)$coefficient/summary(multinom_model.large.sign)$standard.errors
+(p <- (1 - pnorm(abs(z), 0, 1)) * 2)
+
+table(df.mod.large$mod_peche)
+
+# Data partition and modeling
+set.seed(222)
+ind <- sample(2, nrow(df.mod.large), replace = T, prob = c(.6,.4))
+training <- df.mod.large[ind==1,]
+testing <- df.mod.large[ind==2,]
+
+table(training$mod_peche)
+table(testing$mod_peche)
+
+multinom_model.training <- multinom(mod_peche ~ . -a -res_tour -cat_pro.gp -time.day.gp
+                                    #- poss_bat -res_tour -classe_avis_pnm -Temps_peche_estime.cat2h -cat_pro.gp
+                                    , data = training)
+
+# Confusion matrix and misclassification error - training data
+(p <- predict(multinom_model.training, training))
+(tab <- table(p, training$mod_peche))
+1 - sum(diag(tab))/sum(tab) # misclassification
+# Confusion matrix and misclassification error - testing data
+(p1 <- predict(multinom_model.training, testing))
+(tab1 <- table(p1, testing$mod_peche))
+1 - sum(diag(tab1))/sum(tab1) # misclassification
+
+tab/colSums(tab)
+tab1/colSums(tab1)
+# obviously I now have enough variable to model chasse sous-marine class !!
+
+# Check assumptions for multinomial logistic regression:
+
+#Assumption 1: Independence of observations.
+
+#Assumption 2: Independence of Irrelevant Alternatives (IIA); i.e. Categories of the outcome variable must be mutually exclusive and exhaustive.
+#Use the Hausman-McFadden test to check the IIA assumption. However, this test is not directly available in R, so we'll use an approximation.
+# IIA assumption check
+iia_test <- function(model, data, formula) {
+  reduced_model <- update(model, . ~ . - predictor1) # Example, modify as needed
+  model_ll <- logLik(model)
+  reduced_model_ll <- logLik(reduced_model)
+  chi_square <- 2 * (model_ll - reduced_model_ll)
+  p_value <- pchisq(chi_square, df = length(coef(model)) - length(coef(reduced_model)), lower.tail = FALSE)
+  return(p_value)
+}
+
+iia_result <- iia_test(model = multinom_model.large, data = df.mod.large, mod_peche ~  a + res_tour + Temps_peche_estime.cat2h + zone.gp
+                       + age_classe + cat_pro.gp + poss_bat + time.day.gp + nb_sort_an_cat + dep.mod_peche.chr + classe_avis_pnm)
+print(iia_result)
+
+#Assumption 3: No Multicollinearity between independent variables.
+#Check multicollinearity using the Variance Inflation Factor (VIF).
+vif_results <- vif(multinom_model.large)
+print(vif_results)
+#Warning message
+#glm.fit: algorithm did not converge
+#This warning often occurs when you attempt to fit a logistic regression model in R and you experience perfect separation – that is, a predictor variable is able to perfectly separate the response variable into 0’s and 1’s. (https://www.statology.org/glm-fit-algorithm-did-not-converge/)
+labels = rownames(coefficients(multinom_model.large))
+ref = setdiff(multinom_model.large$lab,labels)
+t(sapply(labels,function(i){
+  dat = df.mod.large
+  dat$mod_peche = as.numeric(dat$mod_peche == i)
+  vif.i <<- vif(glm(mod_peche ~ .,data=dat,family="binomial"))
+}))
+# check if vif still to high in the reduced model
+labels = rownames(coefficients(multinom_model.large.sign))
+ref = setdiff(multinom_model.large.sign$lab,labels)
+t(sapply(labels,function(i){
+  dat = df.mod.large
+  dat$mod_peche = as.numeric(dat$mod_peche == i)
+  vif.i <<- vif(glm(mod_peche ~ . -a -res_tour -cat_pro.gp -time.day.gp
+                    #- poss_bat -res_tour -classe_avis_pnm -Temps_peche_estime.cat2h -cat_pro.gp
+                    , data=dat,family="binomial"))
+}))
+
+#Assumption 4: Linearity in the logit (for continuous variables); i.e.  Linear relationship between continuous variables and the logit transformation of the outcome variable.
+
+#Assumption 5: No outliers or highly influential points.
+
+#Also, absolute minimum of cases or multinomial logistic regression indicates a minimum of 10 cases per independent variable.
+
+# stepwize regression for Multinomial Logistic Regression Model. (http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/)
 # the null model contains only the intercept; the full model contains all predictors
-null_model <- multinom(mod_peche ~ 1, data = df.mod.full)
-full_model <- multinom(mod_peche ~ 
-                         a
-                       + age_classe  
-                       + cat_pro.gp 
-                       + sexe 
-                       + res_tour
-                       + poss_bat 
-                       + Temps_peche_estime.cat2h 
-                       + time.day.gp 
-                       + zone.gp 
-                       + nb_sort_an_cat 
-                       + dep.mod_peche.chr
-                       + classe_avis_pnm
-                       , data = df.mod.full)
+(null_model <- multinom(mod_peche ~ 1, data = df.mod.large))
+(multinom_model.large)
 
 # use the stepAIC function from the MASS package, which performs both forward and backward stepwise selection based on AIC (Akaike Information Criterion)
-stepwise_model.forward <- stepAIC(null_model, scope = list(lower = null_model, upper = full_model), direction = "both")
+stepwise_model.forward <- stepAIC(null_model, scope = list(lower = null_model, upper = multinom_model.large), direction = "both")
 stepwise_model.forward$call
-stepwise_model.backward <- stepAIC(null_model, scope = list(lower = null_model, upper = full_model), direction = "backward")
+stepwise_model.backward <- stepAIC(null_model, scope = list(lower = null_model, upper = multinom_model.large), direction = "backward")
 stepwise_model.backward$call
-stepwise_model.both <- stepAIC(null_model, scope = list(lower = null_model, upper = full_model), direction = "both")
+stepwise_model.both <- stepAIC(null_model, scope = list(lower = null_model, upper = multinom_model.large), direction = "both")
 stepwise_model.both$call
 
 stepwise_model.forward$call
 stepwise_model.backward$call
 stepwise_model.both$call
 
-multinom(mod_peche ~ 
-           age_classe  
-         + cat_pro.gp 
-         + sexe 
-         + res_tour
-         + poss_bat 
-         + Temps_peche_effectif.cat2h 
-         + time.day.gp 
-         + zone.gp 
-         + nb_sort_an_cat 
-         + dep.mod_peche.chr
-         + classe_avis_pnm
-         , data = df.mod.full)
+# fit with variables that have a significant effect on the dependant variable mod_peche
 
-response <- "mod_peche"
-predictors <- c("age_classe",  
-                "cat_pro.gp", 
-                "sexe",
-                "res_tour", 
-                "poss_bat", 
-                "Temps_peche_estime.cat2h", 
-                "time.day.gp", 
-                "zone.gp", 
-                "nb_sort_an_cat", 
-                "dep.mod_peche.chr",
-                "classe_avis_pnm"
-                )
-result <- stepwise_multinom(na.omit(df.msa), response, predictors)
-summary(result$model)
-result$predictors
+multinom_model.large.red <- multinom(mod_peche ~ . -a -res_tour -time.day.gp
+                                     #- poss_bat -res_tour -classe_avis_pnm -Temps_peche_estime.cat2h
+                                     , data = df.mod.large) # obviously cat_pro.gp still ameliorate the model although not having a significant effect so keep it as well
+summary(multinom_model.large.red)
+#interpret the coefficients in terms of odds ratios
+exp(coef(multinom_model.large.red))
+(multinom.tbl.large.red <- tidy(multinom_model.large.red, conf.int = TRUE))
+(multinom.tbl.large.red.sign <- filter(multinom.tbl.large.red, p.value < 0.05))
+# watch video https://www.youtube.com/watch?v=oxRy2DMrOF4 on how to write the model to add it in a report
+paste0("ln[P(mod_peche=2)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[1,1], " + " , (exp(coef(multinom_model.large.red)))[1,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[1,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ...")  
+paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[2,1], " + " , (exp(coef(multinom_model.large.red)))[2,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[2,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ...")  
 
+# Fit a decision tree
+# http://www.milbo.org/rpart-plot/prp.pdf
+tree_model <- rpart(mod_peche ~ . -a -res_tour -time.day.gp
+                    #- poss_bat -res_tour -classe_avis_pnm -Temps_peche_estime.cat2h
+                    , data = df.mod.large, method = "class")
+rpart.plot(tree_model, type = 4, extra = 2)
+# we have to remove poss_bat, cfr of course any fisher with a boat does peche embarquee
+tree_model <- rpart(mod_peche ~ . -a -res_tour -time.day.gp
+                    - poss_bat 
+                    #-res_tour -classe_avis_pnm -Temps_peche_estime.cat2h
+                    , data = df.mod.large, method = "class")
+rpart.plot(tree_model, type = 4, extra = 2)
+
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red")))
 
 # plot Kiviat diagram ####
 
@@ -2624,7 +2984,7 @@ barplot.i <- ggplot(df.i.narm, aes(x = tail_cm_classe, fill = mature)) +
   scale_y_continuous(expand = c(0,0))
 barplot.i <- barplot.i + ggtitle(bquote(italic(.(unique(df.i$nom_scien)))~.(years.)~"(N ="~.(nrow(df.i.narm))*")"))
 print(barplot.i)
-ggsave(paste0("Figs/sc_nb_sp/", unique(na.omit(df.i$nom_scien)), "_", years.,"_barplot.png"), barplot.i, width = 5, height = 4)
+#ggsave(paste0("Figs/sc_nb_sp/", unique(na.omit(df.i$nom_scien)), "_", years.,"_barplot.png"), barplot.i, width = 5, height = 4)
 
 }
 
