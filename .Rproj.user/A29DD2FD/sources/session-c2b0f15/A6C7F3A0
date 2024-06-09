@@ -1,0 +1,28 @@
+{
+    "id": "A6C7F3A0",
+    "path": "C:/Users/jonat/OneDrive/Desktop/Jonathan/RStudio/Fishing/fishing.R",
+    "project_path": "fishing.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1714057109446.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "1672,0",
+        "scrollLine": "1668",
+        "notebook_format": "html_document"
+    },
+    "folds": "44|29|369|0|\n370|78|388|0|\n389|23|449|0|\n450|26|556|0|\n557|30|594|0|\n595|27|672|0|\n1140|12|1236|0|\n1237|11|1356|0|\n1809|22|2031|0|\n2079|71|2081|0|\n2083|69|2085|0|\n2107|71|2109|0|\n2111|69|2113|0|\n2136|71|2138|0|\n2140|69|2142|0|\n2323|24|2389|0|\n2390|34|2467|0|\n2639|12|2718|0|\n",
+    "lastKnownWriteTime": 1717935926,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1717935926505,
+    "read_only": false,
+    "read_only_alternatives": []
+}
