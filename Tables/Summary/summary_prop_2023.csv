@@ -1,0 +1,19 @@
+"parametre";"categorie";"pourcentage";"n";"N"
+"a";"2023";100;172;172
+"mod_peche";"chasse sous-marine";12,2093023255814;21;172
+"mod_peche";"peche du bord";76,1627906976744;131;172
+"mod_peche";"peche embarquée";11,6279069767442;20;172
+"sexe";"femme";4,65116279069767;8;172
+"sexe";"homme";95,3488372093023;164;172
+"res_tour";"occasionnel";0,581395348837209;1;172
+"res_tour";"resident";66,8604651162791;115;172
+"res_tour";"secondaire";4,65116279069767;8;172
+"res_tour";"touriste";27,906976744186;48;172
+"Temps_peche_estime.cat2h";"<2h";13,953488372093;24;172
+"Temps_peche_estime.cat2h";">=2h";86,046511627907;148;172
+"zone.gp";"Agriates";0,584795321637427;1;171
+"zone.gp";"Est Cap";46,1988304093567;79;171
+"zone.gp";"nimp_ou";39,766081871345;68;171
+"zone.gp";"Nord Cap";0,584795321637427;1;171
+"zone.gp";"Ouest Cap";1,75438596491228;3;171
+"zone.gp";"Saint-Florent";11,1111111111111;19;171

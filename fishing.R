@@ -367,6 +367,7 @@ names(fishing)[names(fishing) == "force_vent"] <- "force_v"
 class(fishing$saisie) ; class(survey$Saisie) 
 names(fishing)[names(fishing) == "saisie"] <- "Saisie"
 
+
 # some more step by step work on the data according to below code of analysis ####
 
 head(survey$date)
@@ -384,7 +385,14 @@ fishing$mod_peche <- ifelse(fishing$mod_peche == "PDB", "pdb", fishing$mod_peche
 fishing$mod_peche <- ifelse(fishing$mod_peche == "PE", "pe", fishing$mod_peche)
 fishing$mod_peche <- ifelse(fishing$mod_peche == "CSM", "csm", fishing$mod_peche)
 
+saveRDS(survey, "Raw data_mined/enquetes.rds")
+write.csv2(survey, "Raw data_mined/enquetes.csv")
+saveRDS(fishing, "Raw data_mined/terrain.rds")
+write.csv2(survey, "Raw data_mined/terrain.csv")
+
+
 # update plot & analysis report 2022
+
 
 # plot fishers vs sex  ####
 
@@ -393,41 +401,15 @@ unique(survey$a)
 df. <- na.omit(survey[, c("a", "sexe")])
 unique(df.$a)
 
-df. %>%  filter(a %in% c("2020","2021","2022")) %>% group_by(sexe) %>% count() -> data.1
-data.1 <- data.frame(data.1)
-data.1$fraction = (data.1$n/sum(data.1$n))*100
-data.1
+df. %>%  filter(a %in% c("2020","2021","2022", "2023")) %>% group_by(sexe) %>% count() -> data
+data <- data.frame(data)
+data$fraction = (data$n/sum(data$n))*100
+data
 
-ggplot(data.1, aes(x="", y=fraction, fill=sexe)) +
+ggplot(data, aes(x="", y=fraction, fill=sexe)) +
   geom_bar(stat="identity", width=1) +
   coord_polar(theta = "y", start=0) +
-  ggtitle("2020-2022") +
-  theme_bw() +
-  theme(#axis.line=element_blank(),
-        #axis.text.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks=element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        #legend.position="none",
-        panel.background=element_blank(),
-        panel.border=element_blank(),
-        #panel.grid.major=element_blank(),
-        #panel.grid.minor=element_blank(),
-        #plot.background=element_blank()
-        ) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  geom_text(aes(label = scales::percent(fraction/100)), position = position_stack(vjust = 0.5))  # Ajouter les pourcentages
-
-df. %>%  filter(a %in% c("2023")) %>% group_by(sexe) %>% count() -> data.2
-data.2 <- data.frame(data.2)
-data.2$fraction = (data.2$n/sum(data.2$n))*100
-data.2
-
-ggplot(data.2, aes(x="", y=fraction, fill=sexe)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta = "y", start=0) +
-  ggtitle("2023") +
+  ggtitle(paste0("2020-2023 (n=", sum(data$n), ")")) +
   theme_bw() +
   theme(#axis.line=element_blank(),
     #axis.text.x=element_blank(),
@@ -445,7 +427,66 @@ ggplot(data.2, aes(x="", y=fraction, fill=sexe)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = scales::percent(fraction/100)), position = position_stack(vjust = 0.5))  # Ajouter les pourcentages
 
+ggsave("Figs/Sex/sex_2020-2023.png", width = 5, height = 4)
+
+df. %>%  filter(a %in% c("2020","2021","2022")) %>% group_by(sexe) %>% count() -> data.1
+data.1 <- data.frame(data.1)
+data.1$fraction = (data.1$n/sum(data.1$n))*100
+data.1
+
+ggplot(data.1, aes(x="", y=fraction, fill=sexe)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta = "y", start=0) +
+  ggtitle(paste0("2020-2022 (n=", sum(data.1$n), ")")) +
+  theme_bw() +
+  theme(#axis.line=element_blank(),
+        #axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        #legend.position="none",
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        #panel.grid.major=element_blank(),
+        #panel.grid.minor=element_blank(),
+        #plot.background=element_blank()
+        ) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_text(aes(label = scales::percent(fraction/100)), position = position_stack(vjust = 0.5))  # Ajouter les pourcentages
+
+ggsave("Figs/Sex/sex_2020-2022.png", width = 5, height = 4)
+
+df. %>%  filter(a %in% c("2023")) %>% group_by(sexe) %>% count() -> data.2
+data.2 <- data.frame(data.2)
+data.2$fraction = (data.2$n/sum(data.2$n))*100
+data.2
+
+ggplot(data.2, aes(x="", y=fraction, fill=sexe)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta = "y", start=0) +
+  ggtitle(paste0("2023 (n=", sum(data.2$n), ")")) +
+  theme_bw() +
+  theme(#axis.line=element_blank(),
+    #axis.text.x=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    #legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    #panel.grid.major=element_blank(),
+    #panel.grid.minor=element_blank(),
+    #plot.background=element_blank()
+  ) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_text(aes(label = scales::percent(fraction/100)), position = position_stack(vjust = 0.5))  # Ajouter les pourcentages
+
+ggsave("Figs/Sex/sex_2023.png", width = 5, height = 4)
+
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%")))
+
 
 # plot age pyramid by sex ####
 
@@ -528,10 +569,10 @@ ggplot()+  # default x-axis is age in years;
                     "%"))+  
   
   # designate colors and legend labels manually
-  #scale_fill_manual(
-    #values = c("femme" = "orange",
-    #           "homme" = "darkgreen"),
-    #labels = c("femme", "homme"))+
+  scale_fill_manual(
+    values = c("femme" = "#F8766D",
+               "homme" = "#00BFC4"),
+    labels = c(paste0("femme (n=", sum((filter(pyramid_data, sexe=="femme"))[,"counts"], na.rm = T), ")"), paste0("homme (n=", sum((filter(pyramid_data, sexe=="homme"))[,"counts"], na.rm = T), ")")))+
   
   # label values (remember X and Y flipped now)
   labs(
@@ -552,7 +593,10 @@ ggplot()+  # default x-axis is age in years;
     plot.caption = element_text(hjust=0, size=11, face = "italic")
   )
 
+ggsave("Figs/pyramid.age_2020-2022.png", width = 7, height = 4)
+
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%")))
+
 
 # boxplot age vs fishing mode ####
 
@@ -589,8 +633,11 @@ ggplot(filter(data.1, mod_peche != "peche à l'oursin"), aes(x=mod_peche, y=age_
   stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
   geom_point(data = filter(data.1, mod_peche == "peche à l'oursin"), 
              mapping = aes(x = mod_peche, y = mean(unclass((filter(data.1, mod_peche == "peche à l'oursin")["age_moyen"]))$age_moyen)), shape=20, size=5, color="red", fill="red")
+
+ggsave("Figs/mode.peche.vs.age_2020-2022.png", width = 5, height = 4)
   
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%")))
+
 
 # plot proportion mod_pech ####
 
@@ -599,6 +646,7 @@ table(survey$mod_peche)
 unique(survey$a)
 df. <- survey[, c("age_moyen", "a", "mod_peche")]
 unique(df.$a) 
+
 table(df.[, c("a", "mod_peche")] %>% group_by(a, mod_peche))
 
 df. %>% filter(mod_peche != "pdb, csm") -> df.
@@ -612,16 +660,16 @@ df.$mod_peche <- as.factor(df.$mod_peche)
 df.$mod_peche <- factor(df.$mod_peche, levels = c("chasse sous-marine", "peche du bord", "peche embarquée", "peche à l'oursin"))
 table(df.$mod_peche)
 
-df. %>%  filter(a %in% c("2020","2021","2022")) %>% group_by(mod_peche) %>% count() -> data.1
-data.1 <- data.frame(data.1)
-data.1$fraction = (data.1$n/sum(data.1$n))*100
-data.1
-names(data.1) <- c("technique", "n", "fraction")
+df. %>%  filter(a %in% c("2020","2021","2022", "2023")) %>% group_by(mod_peche) %>% count() -> data
+data <- data.frame(data)
+data$fraction = (data$n/sum(data$n))*100
+data
+names(data) <- c("technique", "n", "fraction")
 
-ggplot(data.1, aes(x="", y=n, fill=technique)) +
+ggplot(data, aes(x="", y=n, fill=technique)) +
   geom_bar(stat="identity", width=1) +
   coord_polar(theta = "y", start=0) +
-  ggtitle("2020-2022") +
+  ggtitle(paste0("2020-2023 (n=", sum(data$n,na.rm = T), ")")) +
   theme_bw() +
   theme(#axis.line=element_blank(),
     #axis.text.x=element_blank(),
@@ -639,6 +687,38 @@ ggplot(data.1, aes(x="", y=n, fill=technique)) +
   scale_fill_brewer(palette="Blues") +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = n), position = position_stack(vjust = 0.5))
+
+ggsave("Figs/Technique.peche/tech_2020-2023.png", width = 7, height = 4)
+
+df. %>%  filter(a %in% c("2020","2021","2022")) %>% group_by(mod_peche) %>% count() -> data.1
+data.1 <- data.frame(data.1)
+data.1$fraction = (data.1$n/sum(data.1$n))*100
+data.1
+names(data.1) <- c("technique", "n", "fraction")
+
+ggplot(data.1, aes(x="", y=n, fill=technique)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta = "y", start=0) +
+  ggtitle(paste0("2020-2022 (n=", sum(data.1$n,na.rm = T), ")")) +
+  theme_bw() +
+  theme(#axis.line=element_blank(),
+    #axis.text.x=element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks=element_blank(),
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    #legend.position="none",
+    panel.background=element_blank(),
+    panel.border=element_blank(),
+    #panel.grid.major=element_blank(),
+    #panel.grid.minor=element_blank(),
+    #plot.background=element_blank()
+  ) + 
+  scale_fill_brewer(palette="Blues") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_text(aes(label = n), position = position_stack(vjust = 0.5))
+
+ggsave("Figs/Technique.peche/tech_2020-2022.png", width = 7, height = 4)
 
 df. %>%  filter(a %in% c("2023")) %>% group_by(mod_peche) %>% count() -> data.2
 data.2 <- data.frame(data.2)
@@ -649,7 +729,7 @@ names(data.2) <- c("technique", "n", "fraction")
 ggplot(data.2, aes(x="", y=n, fill=technique)) +
   geom_bar(stat="identity", width=1) +
   coord_polar(theta = "y", start=0) +
-  ggtitle("2023") +
+  ggtitle(paste0("2023 (n=", sum(data.2$n,na.rm = T), ")")) +
   theme_bw() +
   theme(#axis.line=element_blank(),
     #axis.text.x=element_blank(),
@@ -668,7 +748,10 @@ ggplot(data.2, aes(x="", y=n, fill=technique)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = n), position = position_stack(vjust = 0.5))
 
+ggsave("Figs/Technique.peche/tech_2023.png", width = 7, height = 4)
+
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%")))
+
 
 # prepare df. to perform multivariate analysis ####
 
@@ -1098,6 +1181,7 @@ df.$dep.median.rd.chr <- as.factor(df.$dep.median.rd.chr)
 nrow(filter(df., a %in% c("2020", "2021", "2022")))
 nrow(filter(df., a %in% c("2023")))
 
+
 # reduce df. for multivariate spatial analysis ####
 
 df.msa <- df.[, c("a", "mod_peche","age_classe","cat_pro.gp"
@@ -1136,6 +1220,7 @@ length(na.omit((filter(df.msa, as.character(df.msa$dep.median.rd.chr) != "NA"))[
 length(na.omit((filter(df.msa, as.character(df.msa$dep.mod_peche.chr) != "NA"))[,"dep.mod_peche.chr"]))
 
 #There are variables with n ~ 517, when surveyed in 2023, and variables with n ~ 260, when only surveyed in 2020-2022, but not 2023. So we cannot do the full multivariate spatial analysis with all the variables for 2023 ; and for espece cible, even less data ...
+
 
 # plot FAMD ####
 
@@ -1234,6 +1319,7 @@ length(na.omit((filter(df.msa, as.character(df.msa$dep.mod_peche.chr) != "NA"))[
 # fviz_mfa_ind(res.famd, habillage = "mod_peche", addEllipses = TRUE, ellipse.type = "confidence", label = "none", repel = TRUE # Avoid text overlapping
 # )
 
+
 # plot MCA ####
 
 #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/114-mca-multiple-correspondence-analysis-in-r-essentials/
@@ -1276,10 +1362,88 @@ df.full <- droplevels(df.full)
 summary(df.full)
 df.red <- droplevels(df.red)
 summary(df.red)
+# MCA: performed on one of the above df.
 
-# MCA: performed on one of the below df.
+# df.full 2020-2022
+unique(df.full$a)
 res.mca <- MCA(df.full, ncp = ncol(df.full), graph = TRUE)
 #res.mca <- MCA(df.full[, 3:ncol(df.full)], ncp = ncol(df.full[, 3:ncol(df.full)]), graph = TRUE)
+
+# Eigenvalues / Variances = The proportion of variances retained by the different dimensions (axes) 
+(eig.val <- get_eigenvalue(res.mca))
+fviz_screeplot(res.mca, addlabels = TRUE, ylim = c(0, eig.val[1,3]*1.1))
+# Biplot of individuals and variable categories
+fviz_mca_biplot(res.mca, 
+                repel = TRUE, # Avoid text overlapping (slow if many point)
+                ggtheme = theme_minimal())
+# Graph of variables
+(var <- get_mca_var(res.mca))
+# Coordinates
+head(var$coord)
+# Cos2: quality on the factore map
+head(var$cos2)
+# Contributions to the principal components
+head(var$contrib)
+# Correlation between variables and principal dimensions
+fviz_mca_var(res.mca, choice = "mca.cor", 
+             repel = TRUE, # Avoid text overlapping (slow)
+             ggtheme = theme_minimal())
+ggsave("Figs/MCA/variables_2020-2022.png", width = 7, height = 4, bg = "white")
+# Coordinates of variable categories
+fviz_mca_var(res.mca, 
+             repel = TRUE, # Avoid text overlapping (slow)
+             ggtheme = theme_minimal())
+# Quality of representation of variable categories: the squared cosine (cos2) measures the degree of association between variable categories and a particular axis (quality on the factor map)
+fviz_mca_var(res.mca, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE, # Avoid text overlapping
+             ggtheme = theme_minimal())
+# Contribution of variable categories to the dimensions
+# Contributions of rows to dimension 1
+fviz_contrib(res.mca, choice = "var", axes = 1, top = 15)
+# Contributions of rows to dimension 2
+fviz_contrib(res.mca, choice = "var", axes = 2, top = 15)
+# Total contribution to dimension 1 and 2
+fviz_contrib(res.mca, choice = "var", axes = 1:2, top = 15)
+# Color the most important (or, contributing) variable categories 
+fviz_mca_var(res.mca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE, # avoid text overlapping (slow)
+             ggtheme = theme_minimal()
+)
+# Graph of individuals
+(ind <- get_mca_ind(res.mca))
+# Plots: quality and contribution
+# color individuals by their cos2 values
+fviz_mca_ind(res.mca, col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE, # Avoid text overlapping (slow if many points)
+             ggtheme = theme_minimal())
+# Cos2 of individuals
+fviz_cos2(res.mca, choice = "ind", axes = 1:2, top = 20)
+# Contribution of individuals to the dimensions
+fviz_contrib(res.mca, choice = "ind", axes = 1:2, top = 20)
+# Color individuals by groups
+fviz_mca_ind(res.mca, 
+             label = "none", # hide individual labels
+             habillage = "mod_peche", # color by groups 
+             #palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, ellipse.type = "confidence",
+             ggtheme = theme_minimal()) 
+# color individuals using multiple categorical variables
+fviz_ellipses(res.mca, c("a", "mod_peche"),
+              geom = "point",
+              )
+ggsave("Figs/MCA/factor.map_2020-2022.png", width = 10, height = 5)
+# Dimension description: to identify the most correlated variables with a given dimension
+res.desc <- dimdesc(res.mca, axes = c(1,2))
+# Description of dimension 1
+res.desc[[1]]
+# Description of dimension 2
+res.desc[[2]]
+
+# df.short 2020-2023
+unique(df.red$a)
 res.mca <- MCA(df.red, ncp = ncol(df.red), graph = TRUE)
 #res.mca <- MCA(df.red[, 3:ncol(df.red)], ncp = ncol(df.red[, 3:ncol(df.red)]), graph = TRUE)
 
@@ -1302,6 +1466,7 @@ head(var$contrib)
 fviz_mca_var(res.mca, choice = "mca.cor", 
              repel = TRUE, # Avoid text overlapping (slow)
              ggtheme = theme_minimal())
+ggsave("Figs/MCA/variables_2020-2023.png", width = 7, height = 4, bg = "white")
 # Coordinates of variable categories
 fviz_mca_var(res.mca, 
              repel = TRUE, # Avoid text overlapping (slow)
@@ -1346,6 +1511,7 @@ fviz_mca_ind(res.mca,
 # color individuals using multiple categorical variables
 fviz_ellipses(res.mca, c("a", "mod_peche"),
               geom = "point")
+ggsave("Figs/MCA/factor.map_2020-2023.png", width = 10, height = 5)
 # Dimension description: to identify the most correlated variables with a given dimension
 res.desc <- dimdesc(res.mca, axes = c(1,2))
 # Description of dimension 1
@@ -1378,7 +1544,8 @@ df.mod <- survey[, c(
                   , "Temps_peche_effectif"
                   )]
 
-df.mod$a <- factor(df.mod$a, levels = c("2020", "2021", "2022", "2023", "2024"))
+#df.mod$a <- factor(df.mod$a, levels = c("2020", "2021", "2022", "2023", "2024"))
+#df.mod %>% filter(a %in% c("2020", "2021", "2022", "2023")) -> de.mod
 
 # for model short
 
@@ -1963,16 +2130,26 @@ summary(multinom_model.short.red)
 #interpret the coefficients in terms of odds ratios
 exp(coef(multinom_model.short.red))
 (multinom.tbl.short.red <- tidy(multinom_model.short.red, conf.int = TRUE))
+write.csv2(multinom.tbl.short.red, "Tables/Regression/multinom.2020-2023.csv", row.names = F)
 (multinom.tbl.short.red.sign <- filter(multinom.tbl.short.red, p.value < 0.05))
 # watch video https://www.youtube.com/watch?v=oxRy2DMrOF4 on how to write the model to add it in a report
-paste0("ln[P(mod_peche=2)/P(mod_peche=1)] = ", (exp(coef(multinom_model.short.red)))[1,1], " + " , (exp(coef(multinom_model.short.red)))[1,2],"*",colnames(exp(coef(multinom_model.short.red)))[2], " + ", (exp(coef(multinom_model.short.red)))[1,3],"*",colnames(exp(coef(multinom_model.short.red)))[3], " + ...")  
-paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.short.red)))[2,1], " + " , (exp(coef(multinom_model.short.red)))[2,2],"*",colnames(exp(coef(multinom_model.short.red)))[2], " + ", (exp(coef(multinom_model.short.red)))[2,3],"*",colnames(exp(coef(multinom_model.short.red)))[3], " + ...")  
+(mod1vs2 <- paste0("ln[P(mod_peche=2)/P(mod_peche=1)] = ", (exp(coef(multinom_model.short.red)))[1,1], " + " , (exp(coef(multinom_model.short.red)))[1,2],"*",colnames(exp(coef(multinom_model.short.red)))[2], " + ", (exp(coef(multinom_model.short.red)))[1,3],"*",colnames(exp(coef(multinom_model.short.red)))[3], " + ..."))  
+writeLines(mod1vs2, "Tables/Regression/multinom.2020-2023.P1vsP2.txt")
+(mod1vs3 <- paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.short.red)))[2,1], " + " , (exp(coef(multinom_model.short.red)))[2,2],"*",colnames(exp(coef(multinom_model.short.red)))[2], " + ", (exp(coef(multinom_model.short.red)))[2,3],"*",colnames(exp(coef(multinom_model.short.red)))[3], " + ..."))
+writeLines(mod1vs3, "Tables/Regression/multinom.2020-2023.P1vsP3.txt")
 
 # Fit a decision tree
 # http://www.milbo.org/rpart-plot/prp.pdf
 
 tree_model <- rpart(mod_peche ~ . - res_tour, data = df.mod.short, method = "class")
 rpart.plot(tree_model, type = 4, extra = 2)
+#ggsave("Figs/Tree/tree_2020-2023.png", width = 7, height = 4) #doesn't save the plot with ggsave !
+# Open a PNG device
+#png("Figs/Tree/tree_2020-2023.png", width = 600, height = 350) # bad resolution, save it manually
+# Plot the decision tree
+#rpart.plot(tree_model, type = 4, extra = 2)
+# Close the device
+#dev.off()
 
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red")))
 
@@ -2147,10 +2324,13 @@ summary(multinom_model.large.red)
 #interpret the coefficients in terms of odds ratios
 exp(coef(multinom_model.large.red))
 (multinom.tbl.large.red <- tidy(multinom_model.large.red, conf.int = TRUE))
+write.csv2(multinom.tbl.large.red, "Tables/Regression/multinom.2020-2022.csv", row.names = F)
 (multinom.tbl.large.red.sign <- filter(multinom.tbl.large.red, p.value < 0.05))
 # watch video https://www.youtube.com/watch?v=oxRy2DMrOF4 on how to write the model to add it in a report
-paste0("ln[P(mod_peche=2)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[1,1], " + " , (exp(coef(multinom_model.large.red)))[1,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[1,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ...")  
-paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[2,1], " + " , (exp(coef(multinom_model.large.red)))[2,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[2,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ...")  
+(mod1vs2 <- paste0("ln[P(mod_peche=2)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[1,1], " + " , (exp(coef(multinom_model.large.red)))[1,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[1,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ..."))
+writeLines(mod1vs2, "Tables/Regression/multinom.2020-2022.P1vsP2.txt")
+(mod1vs3 <- paste0("ln[P(mod_peche=3)/P(mod_peche=1)] = ", (exp(coef(multinom_model.large.red)))[2,1], " + " , (exp(coef(multinom_model.large.red)))[2,2],"*",colnames(exp(coef(multinom_model.large.red)))[2], " + ", (exp(coef(multinom_model.large.red)))[2,3],"*",colnames(exp(coef(multinom_model.large.red)))[3], " + ..."))
+writeLines(mod1vs3, "Tables/Regression/multinom.2020-2022.P1vsP3.txt")
 
 # Fit a decision tree
 # http://www.milbo.org/rpart-plot/prp.pdf
@@ -2166,6 +2346,7 @@ tree_model <- rpart(mod_peche ~ . -a -res_tour -time.day.gp
 rpart.plot(tree_model, type = 4, extra = 2)
 
 rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red")))
+
 
 # plot Kiviat diagram ####
 
@@ -2304,6 +2485,8 @@ unique(df.plora$mod_peche)
 unique(df.plora$a)
 plot.radar(col. = "#619CFF", col.fill = "#619CFF50", title. = "trois mode de peche confondus, 2023")
 
+#ggsave("Figs/Kiviat/kiviat_3.png", width = 5, height = 15) #ggsave doesn't work, do it manually; 400x1200 ; idem for the next ones
+
 par(op)
 par(mfrow = c(1,1))
 
@@ -2388,9 +2571,10 @@ plot.radar(col. = "#619CFF", col.fill = "#619CFF50", title. = "chasse sous-marin
 par(op)
 par(mfrow = c(1,1))
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "df.msa", "%notin%")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red")))
 
-# table enquête en ligne ####
+
+# table enquête en ligne + figs ####
 
 # I will now work with the df.full df. of above multivariate spatial analysis and Kiviat diagrams.
 # so all the previous code was removed, copy paste in another R script just in case, but always available in the above code since same preparation work of variables.
@@ -2455,6 +2639,8 @@ names(results_df)[names(results_df) == "Freq...3"] <- "pourcentage"
 names(results_df)[names(results_df) == "Freq...6"] <- "n"
 results_df %>% group_by(parametre) %>% summarise(N = sum(n, na.rm = T)) -> N
 results_df <- left_join(results_df, N)
+results_df
+write.csv2(results_df, "Tables/Summary/summary_prop_2020-2023.csv", row.names = F)
 
 df.1 <- filter(df.red, a %in% c("2020", "2021", "2022"))
 df.1 <- droplevels(df.1)
@@ -2483,6 +2669,8 @@ names(results_df.1)[names(results_df.1) == "Freq...3"] <- "pourcentage"
 names(results_df.1)[names(results_df.1) == "Freq...6"] <- "n"
 results_df.1 %>% group_by(parametre) %>% summarise(N = sum(n, na.rm = T)) -> N
 results_df.1 <- left_join(results_df.1, N)
+results_df.1
+write.csv2(results_df.1, "Tables/Summary/summary_prop_2020-2022.csv", row.names = F)
 
 df.2 <- filter(df.red, a %in% c("2023"))
 df.2[, colSums(is.na(df.2)) != nrow(df.2)]
@@ -2513,101 +2701,8 @@ names(results_df.2)[names(results_df.2) == "Freq...6"] <- "n"
 results_df.2$parametre <- ifelse(results_df.2$categorie == "2023", "a", results_df.2$parametre)
 results_df.2 %>% group_by(parametre) %>% summarise(N = sum(n, na.rm = T)) -> N
 results_df.2 <- left_join(results_df.2, N)
-
-op <- par(mar = c(0, 2, 2, 2))
-par(mfrow = c(3,1))
-
-unique(results_df$parametre)
-unique(filter(results_df, parametre == "a")["categorie"])
-results_df %>% group_by(parametre) %>% filter(pourcentage == max(pourcentage)) -> df.plot
-df.plot <- df.plot[1:nrow(df.plot), c("categorie", "pourcentage")]
-#saveRDS(df.plot, "df.plot.rds") #for ChatGPT
-df.plot <- pivot_wider(df.plot, names_from = categorie, values_from = pourcentage)
-p.radar <- rbind(0,df.plot)
-p.radar <- rbind(100,p.radar)
-p.radar <- lapply(p.radar,as.numeric)
-#p.radar[3,] <- p.radar[3,]/100
-names.p.radar <- names(df.plot)
-p.radar <- data.frame(p.radar)
-names(p.radar) <- names.p.radar
-#write.csv2(p.radar, "p.radar.csv") #for ChatGPT
-
-radarchart(p.radar
-           , axistype=1
-           , pcol=rgb(0.2,0.5,0.5,0.9) 
-           , pfcol=rgb(0.2,0.5,0.5,0.5) 
-           , plwd=4 
-           #, cglcol="grey"
-           , cglty=1
-           , axislabcol="grey"
-           , caxislabels= c(0, 20, 50, 75, 100)
-           , cglwd=0.8
-           , vlcex=1
-           , title = "2020-2023"
-)
-
-unique(results_df.1$parametre)
-unique(filter(results_df.1, parametre == "a")["categorie"])
-results_df.1 %>% group_by(parametre) %>% filter(pourcentage == max(pourcentage)) -> df.plot
-df.plot <- df.plot[1:nrow(df.plot), c("categorie", "pourcentage")]
-#saveRDS(df.plot, "df.plot.rds") #for ChatGPT
-df.plot <- pivot_wider(df.plot, names_from = categorie, values_from = pourcentage)
-p.radar <- rbind(0,df.plot)
-p.radar <- rbind(100,p.radar)
-p.radar <- lapply(p.radar,as.numeric)
-#p.radar[3,] <- p.radar[3,]/100
-names.p.radar <- names(df.plot)
-p.radar <- data.frame(p.radar)
-names(p.radar) <- names.p.radar
-#write.csv2(p.radar, "p.radar.csv") #for ChatGPT
-
-radarchart(p.radar
-           , axistype=1
-           , pcol=rgb(0.2,0.5,0.5,0.9) 
-           , pfcol=rgb(0.2,0.5,0.5,0.5) 
-           , plwd=4 
-           #, cglcol="grey"
-           , cglty=1
-           , axislabcol="grey"
-           , caxislabels= c(0, 20, 50, 75, 100)
-           , cglwd=0.8
-           , vlcex=1
-           , title = "2020-2022"
-)
-
-unique(results_df.2$parametre)
-unique(filter(results_df.2, parametre == "a")["categorie"])
-filter(results_df.2, parametre != "a") -> results_df.2 
-results_df.2 %>% group_by(parametre) %>% filter(pourcentage == max(pourcentage)) -> df.plot
-df.plot <- df.plot[1:nrow(df.plot), c("categorie", "pourcentage")]
-#saveRDS(df.plot, "df.plot.rds") #for ChatGPT
-df.plot <- pivot_wider(df.plot, names_from = categorie, values_from = pourcentage)
-p.radar <- rbind(0,df.plot)
-p.radar <- rbind(100,p.radar)
-p.radar <- lapply(p.radar,as.numeric)
-#p.radar[3,] <- p.radar[3,]/100
-names.p.radar <- names(df.plot)
-p.radar <- data.frame(p.radar)
-names(p.radar) <- names.p.radar
-#write.csv2(p.radar, "p.radar.csv") #for ChatGPT
-
-radarchart(p.radar
-           , axistype=1
-           , pcol=rgb(0.2,0.5,0.5,0.9) 
-           , pfcol=rgb(0.2,0.5,0.5,0.5) 
-           , plwd=4 
-           #, cglcol="grey"
-           , cglty=1
-           , axislabcol="grey"
-           , caxislabels= c(0, 20, 50, 75, 100)
-           , cglwd=0.8
-           , vlcex=1
-           , title = "2023"
-)
-
-
-par(op)
-par(mfrow = c(1,1))
+results_df.2
+write.csv2(results_df.2, "Tables/Summary/summary_prop_2023.csv", row.names = F)
 
 unique(results_df$parametre)
 results_df %>% filter(parametre == "zone.gp") -> df.plot
@@ -2615,7 +2710,7 @@ results_df %>% filter(parametre == "zone.gp") -> df.plot
 ggplot(df.plot, aes(x="", y=pourcentage, fill=categorie)) +
   geom_bar(stat="identity", width=1) +
   coord_polar(theta = "y", start=0) +
-  ggtitle("Secteurs de pêches préférés toutes années confondues") +
+  ggtitle("Secteurs de pêches préférés 2020-2023") +
   theme_bw() +
   theme(#axis.line=element_blank(),
     #axis.text.x=element_blank(),
@@ -2632,6 +2727,7 @@ ggplot(df.plot, aes(x="", y=pourcentage, fill=categorie)) +
   ) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = scales::percent(pourcentage/100)), position = position_stack(vjust = 0.55))  # Ajouter les pourcentages
+ggsave("Figs/Secteurs/secteurs_2020-2023.png", width = 7, height = 7)
 
 results_df.1 %>% filter(parametre == "zone.gp") -> df.plot
 
@@ -2655,6 +2751,7 @@ ggplot(df.plot, aes(x="", y=pourcentage, fill=categorie)) +
   ) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = scales::percent(pourcentage/100)), position = position_stack(vjust = 0.55))  # Ajouter les pourcentages
+ggsave("Figs/Secteurs/secteurs_2020-2022.png", width = 7, height = 7)
 
 results_df.2 %>% filter(parametre == "zone.gp") -> df.plot
 
@@ -2678,8 +2775,10 @@ ggplot(df.plot, aes(x="", y=pourcentage, fill=categorie)) +
   ) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_text(aes(label = scales::percent(pourcentage/100)), position = position_stack(vjust = 0.55))  # Ajouter les pourcentages
+ggsave("Figs/Secteurs/secteurs_2023.png", width = 7, height = 7)
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "results_df", "results_df.1", "results_df.2")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red", "results_df", "results_df.1", "results_df.2")))
+
 
 # plot species targeted ####
 
@@ -2720,32 +2819,41 @@ plot.bar.sp <- function(var., title.) {
 
 df. %>% filter(a %in% c("2020", "2021", "2022", "2023")) -> df.sp
 plot.bar.sp(var. = "espcib1", title. = "Espèce cible 1 2020-2023")
+ggsave("Figs/Espece/espece.cible.1_2020-2023.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2020", "2021", "2022", "2023")) -> df.sp
 plot.bar.sp(var. = "espcib2", title. = "Espèce cible 2 2020-2023")
+ggsave("Figs/Espece/espece.cible.2_2020-2023.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2020", "2021", "2022", "2023")) -> df.sp
 plot.bar.sp(var. = "espcib3", title. = "Espèce cible 3 2020-2023")
+ggsave("Figs/Espece/espece.cible.3_2020-2023.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2020", "2021", "2022")) -> df.sp
 plot.bar.sp(var. = "espcib1", title. = "Espèce cible 1 2020-2022")
+ggsave("Figs/Espece/espece.cible.1_2020-2022.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2020", "2021", "2022")) -> df.sp
 plot.bar.sp(var. = "espcib2", title. = "Espèce cible 2 2020-2022")
+ggsave("Figs/Espece/espece.cible.2_2020-2022.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2020", "2021", "2022")) -> df.sp
 plot.bar.sp(var. = "espcib3", title. = "Espèce cible 3 2020-2022")
+ggsave("Figs/Espece/espece.cible.3_2020-2022.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2023")) -> df.sp
 plot.bar.sp(var. = "espcib1", title. = "Espèce cible 1 2023")
+ggsave("Figs/Espece/espece.cible.1_2023.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2023")) -> df.sp
 plot.bar.sp(var. = "espcib2", title. = "Espèce cible 2 2023")
+ggsave("Figs/Espece/espece.cible.2_2023.png", width = 7, height = 7)
 
 df. %>% filter(a %in% c("2023")) -> df.sp
 plot.bar.sp(var. = "espcib3", title. = "Espèce cible 3 2023")
+ggsave("Figs/Espece/espece.cible.3_2023.png", width = 7, height = 7)
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "results_df", "results_df.1", "results_df.2")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red", "results_df", "results_df.1", "results_df.2")))
 
 
 # plot species and biomass fished ####
@@ -2784,12 +2892,15 @@ plot.bar.fsh <- function(title.) {
 
 df.fsh %>% filter(a %in% c("2020", "2021", "2022", "2023") & poids_g != 0) -> df.fsh.red
 plot.bar.fsh(title. = "Biomasse pêchée en 2020-2023")
+ggsave("Figs/Biomasse/biomasse_2020-2023.png", width = 7, height = 7)
 
 df.fsh %>% filter(a %in% c("2020", "2021", "2022") & poids_g != 0) -> df.fsh.red
 plot.bar.fsh(title. = "Biomasse pêchée en 2020-2022")
+ggsave("Figs/Biomasse/biomasse_2020-2022.png", width = 7, height = 7)
 
 df.fsh %>% filter(a %in% c("2023") & poids_g != 0) -> df.fsh.red
 plot.bar.fsh(title. = "Biomasse pêchée en 2023")
+ggsave("Figs/Biomasse/biomasse_2023.png", width = 7, height = 7)
 
 plot.bar.fsh <- function(title.) {
   
@@ -2816,14 +2927,17 @@ plot.bar.fsh <- function(title.) {
 
 df.fsh %>% filter(a %in% c("2020", "2021", "2022", "2023")) -> df.fsh.red
 plot.bar.fsh(title. = "Individus pêchés en 2020-2023")
+ggsave("Figs/Individu/individu_2020-2023.png", width = 7, height = 7)
 
 df.fsh %>% filter(a %in% c("2020", "2021", "2022")) -> df.fsh.red
 plot.bar.fsh(title. = "Individus pêchés en 2020-2022")
+ggsave("Figs/Individu/individu_2020-2022.png", width = 7, height = 7)
 
 df.fsh %>% filter(a %in% c("2023")) -> df.fsh.red
 plot.bar.fsh(title. = "Individus pêchés en 2023")
+ggsave("Figs/Individu/individu_2023.png", width = 7, height = 7)
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "results_df", "results_df.1", "results_df.2")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red", "results_df", "results_df.1", "results_df.2")))
 
 
 # plot main fish species caught by size class ####
@@ -2868,7 +2982,7 @@ sort(df_sum.2$nom_scien[1:6])
 
 sp. <- unique(sort(c(df_sum$nom_scien[1:6], df_sum.1$nom_scien[1:6])))
 sp. <- unique(sort(c(sp., df_sum.2$nom_scien[1:6])))
-(sp. <- sort(sp.))
+(sort(sp.))
 size.at.maturity <- data.frame(species = sp.,
            size.mat = c(18, #"Coris julis", Michel
                         12, #"Diplodus annularis", Michel (7, Lovina)
@@ -2984,7 +3098,7 @@ barplot.i <- ggplot(df.i.narm, aes(x = tail_cm_classe, fill = mature)) +
   scale_y_continuous(expand = c(0,0))
 barplot.i <- barplot.i + ggtitle(bquote(italic(.(unique(df.i$nom_scien)))~.(years.)~"(N ="~.(nrow(df.i.narm))*")"))
 print(barplot.i)
-#ggsave(paste0("Figs/sc_nb_sp/", unique(na.omit(df.i$nom_scien)), "_", years.,"_barplot.png"), barplot.i, width = 5, height = 4)
+ggsave(paste0("Figs/Sc_nb_sp/", unique(na.omit(df.i$nom_scien)), "_", years.,"_barplot.png"), barplot.i, width = 5, height = 4)
 
 }
 
@@ -2994,7 +3108,7 @@ size.sp.(df.fsh. = df.fsh.red, df. = df_sum, years. = "2020-2023")
 size.sp.(df.fsh. = df.fsh.red.1, df. = df_sum.1, years. = "2020-2022")
 size.sp.(df.fsh. = df.fsh.red.2, df. = df_sum.2, years. = "2023")
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "results_df", "results_df.1", "results_df.2")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red", "results_df", "results_df.1", "results_df.2")))
 
 
 # plot CPUE ####
@@ -3039,6 +3153,7 @@ ggplot(filter(data.1, mod_peche != "peche à l'oursin"), aes(x=mod_peche, y=CPUE
   geom_point(data = filter(data.1, mod_peche == "peche à l'oursin"), 
              mapping = aes(x = mod_peche, y = mean(unclass((filter(data.1, mod_peche == "peche à l'oursin")["CPUE"]))$CPUE)), shape=20, size=5, color="red", fill="red") +
   scale_y_cut(breaks = c(750), which=c(1), scales=c(0.5))
+ggsave("Figs/CPUE/CPUE_2020-2023.png", width = 5, height = 4)
 
 df. %>% filter(a %in% c("2020","2021","2022")) -> data.2
 
@@ -3056,6 +3171,7 @@ ggplot(filter(data.2, mod_peche != "peche à l'oursin"), aes(x=mod_peche, y=CPUE
   geom_point(data = filter(data.2, mod_peche == "peche à l'oursin"), 
              mapping = aes(x = mod_peche, y = mean(unclass((filter(data.2, mod_peche == "peche à l'oursin")["CPUE"]))$CPUE)), shape=20, size=5, color="red", fill="red") +
   scale_y_cut(breaks = c(750), which=c(1), scales=c(0.5))
+ggsave("Figs/CPUE/CPUE_2020-2022.png", width = 5, height = 4)
 
 df. %>% filter(a %in% c("2023")) -> data.3
 
@@ -3073,6 +3189,7 @@ ggplot(filter(data.3, mod_peche != "peche à l'oursin"), aes(x=mod_peche, y=CPUE
   geom_point(data = filter(data.3, mod_peche == "peche à l'oursin"), 
              mapping = aes(x = mod_peche, y = mean(unclass((filter(data.3, mod_peche == "peche à l'oursin")["CPUE"]))$CPUE)), shape=20, size=5, color="red", fill="red") +
   scale_y_cut(breaks = c(750), which=c(1), scales=c(0.5))
+ggsave("Figs/CPUE/CPUE_2023.png", width = 5, height = 4)
 
-rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "results_df", "results_df.1", "results_df.2")))
+rm(list=setdiff(ls(), c("fishing", "fishing.PNMCA", "fishing.Stareso", "Meta.survey", "survey", "%notin%", "df.msa", "df.mod", "df.mod.short", "multinom_model.short.red", "df.mod.large", "multinom_model.large.red", "results_df", "results_df.1", "results_df.2")))
 

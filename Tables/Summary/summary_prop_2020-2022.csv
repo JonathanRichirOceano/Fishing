@@ -1,0 +1,51 @@
+"parametre";"categorie";"pourcentage";"n";"N"
+"a";"2020";39,0804597701149;102;261
+"a";"2021";28,3524904214559;74;261
+"a";"2022";32,5670498084291;85;261
+"mod_peche";"chasse sous-marine";6,13026819923372;16;261
+"mod_peche";"peche du bord";44,8275862068966;117;261
+"mod_peche";"peche embarquée";48,2758620689655;126;261
+"mod_peche";"peche à l'oursin";0,766283524904214;2;261
+"sexe";"femme";2,68199233716475;7;261
+"sexe";"homme";97,3180076628352;254;261
+"res_tour";"occasionnel";9,57854406130268;25;261
+"res_tour";"resident";78,1609195402299;204;261
+"res_tour";"secondaire";6,51340996168582;17;261
+"res_tour";"touriste";5,74712643678161;15;261
+"Temps_peche_estime.cat2h";"<2h";10,727969348659;28;261
+"Temps_peche_estime.cat2h";">=2h";89,272030651341;233;261
+"zone.gp";"Agriates";1,91570881226054;5;261
+"zone.gp";"Est Cap";43,6781609195402;114;261
+"zone.gp";"nimp_ou";32,183908045977;84;261
+"zone.gp";"Nord Cap";1,91570881226054;5;261
+"zone.gp";"Ouest Cap";9,57854406130268;25;261
+"zone.gp";"Saint-Florent";10,727969348659;28;261
+"age_classe";"13-24";1,92307692307692;5;260
+"age_classe";"25-39";15,3846153846154;40;260
+"age_classe";"40-49";23,4615384615385;61;260
+"age_classe";"50-59";44,6153846153846;116;260
+"age_classe";"60-69";8,46153846153846;22;260
+"age_classe";"70 et plus";6,15384615384615;16;260
+"cat_pro.gp";"activite";51,5384615384615;134;260
+"cat_pro.gp";"etudiant";1,53846153846154;4;260
+"cat_pro.gp";"retraite";37,6923076923077;98;260
+"cat_pro.gp";"sans_emploi-en_arret";9,23076923076923;24;260
+"nb_sort_an_cat";"Q1 (<=10)";26,8199233716475;70;261
+"nb_sort_an_cat";"Q2 (11-15)";30,2681992337165;79;261
+"nb_sort_an_cat";"Q3 (16-30)";20,3065134099617;53;261
+"nb_sort_an_cat";"Q4 (>=31)";22,6053639846743;59;261
+"classe_avis_pnm";"negatif";0,769230769230769;2;260
+"classe_avis_pnm";"p_avis";15,3846153846154;40;260
+"classe_avis_pnm";"positif";83,8461538461539;218;260
+"poss_bat";"non";52,8735632183908;138;261
+"poss_bat";"oui";47,1264367816092;123;261
+"time.day.gp";"am";51,5384615384615;134;260
+"time.day.gp";"journee";3,46153846153846;9;260
+"time.day.gp";"nimp_q";32,6923076923077;85;260
+"time.day.gp";"nuit";0,384615384615385;1;260
+"time.day.gp";"pm";11,9230769230769;31;260
+"dep.mod_peche.chr";"< 100 euros";36,4341085271318;94;258
+"dep.mod_peche.chr";"entre 100-500 euros";22,8682170542636;59;258
+"dep.mod_peche.chr";"entre 1000-2000 euros";9,68992248062016;25;258
+"dep.mod_peche.chr";"entre 500-1000 euros";11,2403100775194;29;258
+"dep.mod_peche.chr";"supérieur à 2000";19,7674418604651;51;258
