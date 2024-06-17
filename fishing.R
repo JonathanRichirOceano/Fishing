@@ -61,7 +61,7 @@ head(survey$h_debut) ; class(survey$h_debut)
 unique(Meta.survey$Format)
 Meta.survey$Format <- ifelse(Meta.survey$Format == "Binaire", "numeric", Meta.survey$Format)
 Meta.survey$Format <- ifelse(Meta.survey$Format == "Texte", "character", Meta.survey$Format)
-Meta.survey$Format <- ifelse(Meta.survey$Format == "Nombre", "character", Meta.survey$Format) #was numeric before, but some var supposed to be numric must be imported as character cfr e.g. age variable
+Meta.survey$Format <- ifelse(Meta.survey$Format == "Nombre", "character", Meta.survey$Format) #was numeric before, but some var supposed to be numeric must be imported as character cfr e.g. age variable
 Meta.survey$Format <- ifelse(Meta.survey$Format == "Alphanumérique", "character", Meta.survey$Format)
 Meta.survey$Format <- ifelse(Meta.survey$Format == "Date", "date", Meta.survey$Format)
 Meta.survey$Format <- ifelse(Meta.survey$Format == "Horaire", "POSIXct", Meta.survey$Format)
@@ -158,7 +158,7 @@ survey <- add_column(survey, BD = "PNMCA", .before = "mode_eqt")
 
 # fishing data
 
-fishing.Stareso <- read_excel("Enquetes_Pêche_Loisir_PNMCCA_Chabrier_2023 (1).xlsx", sheet = "BD_Stareso", col_names = T, col_types = c(
+fishing.Stareso <- read_excel("Enquetes_Peche_Loisir_PNMCCA_Chabrier_2023 (1).xlsx", sheet = "BD_Stareso", col_names = T, col_types = c(
   "numeric",
   "text",
   "text",
