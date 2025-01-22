@@ -1,0 +1,376 @@
+"a";"mod_peche";"parametre";"categorie";"pourcentage";"n";"N"
+"2020";"peche du bord";"a";"2020";100;67;67
+"2020";"peche du bord";"mod_peche";"peche du bord";100;67;67
+"2020";"peche du bord";"sexe";"homme";100;67;67
+"2020";"peche du bord";"res_tour";"occasionnel";20,8955223880597;14;67
+"2020";"peche du bord";"res_tour";"resident";74,6268656716418;50;67
+"2020";"peche du bord";"res_tour";"secondaire";4,47761194029851;3;67
+"2020";"peche du bord";"Temps_peche_estime.cat2h";"<2h";11,9402985074627;8;67
+"2020";"peche du bord";"Temps_peche_estime.cat2h";">=2h";88,0597014925373;59;67
+"2020";"peche du bord";"zone.gp";"Est Cap";83,5820895522388;56;67
+"2020";"peche du bord";"zone.gp";"Ouest Cap";5,97014925373134;4;67
+"2020";"peche du bord";"zone.gp";"Saint-Florent";10,4477611940298;7;67
+"2020";"peche du bord";"age_classe";"25-39";10,4477611940298;7;67
+"2020";"peche du bord";"age_classe";"40-49";31,3432835820896;21;67
+"2020";"peche du bord";"age_classe";"50-59";58,2089552238806;39;67
+"2020";"peche du bord";"cat_pro.gp";"activite";31,3432835820896;21;67
+"2020";"peche du bord";"cat_pro.gp";"retraite";47,7611940298507;32;67
+"2020";"peche du bord";"cat_pro.gp";"sans_emploi-en_arret";20,8955223880597;14;67
+"2020";"peche du bord";"nb_sort_an_cat";"Q1 (<=10)";31,3432835820896;21;67
+"2020";"peche du bord";"nb_sort_an_cat";"Q2 (11-15)";62,6865671641791;42;67
+"2020";"peche du bord";"nb_sort_an_cat";"Q3 (16-30)";5,97014925373134;4;67
+"2020";"peche du bord";"classe_avis_pnm";"p_avis";16,4179104477612;11;67
+"2020";"peche du bord";"classe_avis_pnm";"positif";83,5820895522388;56;67
+"2020";"peche du bord";"poss_bat";"non";98,5074626865672;66;67
+"2020";"peche du bord";"poss_bat";"oui";1,49253731343284;1;67
+"2020";"peche du bord";"time.day.gp";"am";71,6417910447761;48;67
+"2020";"peche du bord";"time.day.gp";"pm";28,3582089552239;19;67
+"2020";"peche du bord";"dep.mod_peche.chr";"< 100 euros";91,044776119403;61;67
+"2020";"peche du bord";"dep.mod_peche.chr";"entre 100-500 euros";7,46268656716418;5;67
+"2020";"peche du bord";"dep.mod_peche.chr";"entre 1000-2000 euros";1,49253731343284;1;67
+"2020";"chasse sous-marine";"a";"2020";100;11;11
+"2020";"chasse sous-marine";"mod_peche";"chasse sous-marine";100;11;11
+"2020";"chasse sous-marine";"sexe";"femme";9,09090909090909;1;11
+"2020";"chasse sous-marine";"sexe";"homme";90,9090909090909;10;11
+"2020";"chasse sous-marine";"res_tour";"occasionnel";18,1818181818182;2;11
+"2020";"chasse sous-marine";"res_tour";"resident";72,7272727272727;8;11
+"2020";"chasse sous-marine";"res_tour";"secondaire";9,09090909090909;1;11
+"2020";"chasse sous-marine";"Temps_peche_estime.cat2h";"<2h";9,09090909090909;1;11
+"2020";"chasse sous-marine";"Temps_peche_estime.cat2h";">=2h";90,9090909090909;10;11
+"2020";"chasse sous-marine";"zone.gp";"Est Cap";90,9090909090909;10;11
+"2020";"chasse sous-marine";"zone.gp";"Ouest Cap";9,09090909090909;1;11
+"2020";"chasse sous-marine";"age_classe";"13-24";18,1818181818182;2;11
+"2020";"chasse sous-marine";"age_classe";"25-39";45,4545454545455;5;11
+"2020";"chasse sous-marine";"age_classe";"40-49";36,3636363636364;4;11
+"2020";"chasse sous-marine";"cat_pro.gp";"activite";81,8181818181818;9;11
+"2020";"chasse sous-marine";"cat_pro.gp";"etudiant";9,09090909090909;1;11
+"2020";"chasse sous-marine";"cat_pro.gp";"sans_emploi-en_arret";9,09090909090909;1;11
+"2020";"chasse sous-marine";"nb_sort_an_cat";"Q1 (<=10)";36,3636363636364;4;11
+"2020";"chasse sous-marine";"nb_sort_an_cat";"Q2 (11-15)";54,5454545454545;6;11
+"2020";"chasse sous-marine";"nb_sort_an_cat";"Q4 (>=31)";9,09090909090909;1;11
+"2020";"chasse sous-marine";"classe_avis_pnm";"p_avis";9,09090909090909;1;11
+"2020";"chasse sous-marine";"classe_avis_pnm";"positif";90,9090909090909;10;11
+"2020";"chasse sous-marine";"poss_bat";"non";100;11;11
+"2020";"chasse sous-marine";"time.day.gp";"am";54,5454545454545;6;11
+"2020";"chasse sous-marine";"time.day.gp";"pm";45,4545454545455;5;11
+"2020";"chasse sous-marine";"dep.mod_peche.chr";"< 100 euros";36,3636363636364;4;11
+"2020";"chasse sous-marine";"dep.mod_peche.chr";"entre 100-500 euros";63,6363636363636;7;11
+"2020";"peche embarquée";"a";"2020";100;24;24
+"2020";"peche embarquée";"mod_peche";"peche embarquée";100;24;24
+"2020";"peche embarquée";"sexe";"femme";4,16666666666667;1;24
+"2020";"peche embarquée";"sexe";"homme";95,8333333333333;23;24
+"2020";"peche embarquée";"res_tour";"occasionnel";20,8333333333333;5;24
+"2020";"peche embarquée";"res_tour";"resident";54,1666666666667;13;24
+"2020";"peche embarquée";"res_tour";"secondaire";25;6;24
+"2020";"peche embarquée";"Temps_peche_estime.cat2h";"<2h";8,33333333333333;2;24
+"2020";"peche embarquée";"Temps_peche_estime.cat2h";">=2h";91,6666666666667;22;24
+"2020";"peche embarquée";"zone.gp";"Est Cap";29,1666666666667;7;24
+"2020";"peche embarquée";"zone.gp";"nimp_ou";8,33333333333333;2;24
+"2020";"peche embarquée";"zone.gp";"Ouest Cap";8,33333333333333;2;24
+"2020";"peche embarquée";"zone.gp";"Saint-Florent";54,1666666666667;13;24
+"2020";"peche embarquée";"age_classe";"25-39";4,16666666666667;1;24
+"2020";"peche embarquée";"age_classe";"40-49";12,5;3;24
+"2020";"peche embarquée";"age_classe";"50-59";83,3333333333333;20;24
+"2020";"peche embarquée";"cat_pro.gp";"activite";41,6666666666667;10;24
+"2020";"peche embarquée";"cat_pro.gp";"retraite";54,1666666666667;13;24
+"2020";"peche embarquée";"cat_pro.gp";"sans_emploi-en_arret";4,16666666666667;1;24
+"2020";"peche embarquée";"nb_sort_an_cat";"Q1 (<=10)";37,5;9;24
+"2020";"peche embarquée";"nb_sort_an_cat";"Q2 (11-15)";45,8333333333333;11;24
+"2020";"peche embarquée";"nb_sort_an_cat";"Q3 (16-30)";16,6666666666667;4;24
+"2020";"peche embarquée";"classe_avis_pnm";"p_avis";16,6666666666667;4;24
+"2020";"peche embarquée";"classe_avis_pnm";"positif";83,3333333333333;20;24
+"2020";"peche embarquée";"poss_bat";"non";20,8333333333333;5;24
+"2020";"peche embarquée";"poss_bat";"oui";79,1666666666667;19;24
+"2020";"peche embarquée";"time.day.gp";"am";100;24;24
+"2020";"peche embarquée";"dep.mod_peche.chr";"< 100 euros";22,7272727272727;5;22
+"2020";"peche embarquée";"dep.mod_peche.chr";"entre 100-500 euros";22,7272727272727;5;22
+"2020";"peche embarquée";"dep.mod_peche.chr";"entre 1000-2000 euros";18,1818181818182;4;22
+"2020";"peche embarquée";"dep.mod_peche.chr";"entre 500-1000 euros";18,1818181818182;4;22
+"2020";"peche embarquée";"dep.mod_peche.chr";"supérieur à 2000";18,1818181818182;4;22
+"2021";"peche embarquée";"a";"2021";100;50;50
+"2021";"peche embarquée";"mod_peche";"peche embarquée";100;50;50
+"2021";"peche embarquée";"sexe";"femme";2;1;50
+"2021";"peche embarquée";"sexe";"homme";98;49;50
+"2021";"peche embarquée";"res_tour";"occasionnel";2;1;50
+"2021";"peche embarquée";"res_tour";"resident";98;49;50
+"2021";"peche embarquée";"Temps_peche_estime.cat2h";"<2h";8;4;50
+"2021";"peche embarquée";"Temps_peche_estime.cat2h";">=2h";92;46;50
+"2021";"peche embarquée";"zone.gp";"Agriates";4;2;50
+"2021";"peche embarquée";"zone.gp";"Est Cap";26;13;50
+"2021";"peche embarquée";"zone.gp";"nimp_ou";56;28;50
+"2021";"peche embarquée";"zone.gp";"Nord Cap";2;1;50
+"2021";"peche embarquée";"zone.gp";"Ouest Cap";10;5;50
+"2021";"peche embarquée";"zone.gp";"Saint-Florent";2;1;50
+"2021";"peche embarquée";"age_classe";"25-39";22;11;50
+"2021";"peche embarquée";"age_classe";"40-49";14;7;50
+"2021";"peche embarquée";"age_classe";"50-59";62;31;50
+"2021";"peche embarquée";"age_classe";"70 et plus";2;1;50
+"2021";"peche embarquée";"cat_pro.gp";"activite";68;34;50
+"2021";"peche embarquée";"cat_pro.gp";"retraite";30;15;50
+"2021";"peche embarquée";"cat_pro.gp";"sans_emploi-en_arret";2;1;50
+"2021";"peche embarquée";"nb_sort_an_cat";"Q1 (<=10)";14;7;50
+"2021";"peche embarquée";"nb_sort_an_cat";"Q2 (11-15)";12;6;50
+"2021";"peche embarquée";"nb_sort_an_cat";"Q3 (16-30)";28;14;50
+"2021";"peche embarquée";"nb_sort_an_cat";"Q4 (>=31)";46;23;50
+"2021";"peche embarquée";"classe_avis_pnm";"p_avis";8;4;50
+"2021";"peche embarquée";"classe_avis_pnm";"positif";92;46;50
+"2021";"peche embarquée";"poss_bat";"non";4;2;50
+"2021";"peche embarquée";"poss_bat";"oui";96;48;50
+"2021";"peche embarquée";"time.day.gp";"am";36,734693877551;18;49
+"2021";"peche embarquée";"time.day.gp";"journee";18,3673469387755;9;49
+"2021";"peche embarquée";"time.day.gp";"nimp_q";42,8571428571429;21;49
+"2021";"peche embarquée";"time.day.gp";"pm";2,04081632653061;1;49
+"2021";"peche embarquée";"dep.mod_peche.chr";"< 100 euros";6;3;50
+"2021";"peche embarquée";"dep.mod_peche.chr";"entre 100-500 euros";16;8;50
+"2021";"peche embarquée";"dep.mod_peche.chr";"entre 1000-2000 euros";22;11;50
+"2021";"peche embarquée";"dep.mod_peche.chr";"entre 500-1000 euros";12;6;50
+"2021";"peche embarquée";"dep.mod_peche.chr";"supérieur à 2000";44;22;50
+"2021";"chasse sous-marine";"a";"2021";100;2;2
+"2021";"chasse sous-marine";"mod_peche";"chasse sous-marine";100;2;2
+"2021";"chasse sous-marine";"sexe";"homme";100;2;2
+"2021";"chasse sous-marine";"res_tour";"resident";100;2;2
+"2021";"chasse sous-marine";"Temps_peche_estime.cat2h";">=2h";100;2;2
+"2021";"chasse sous-marine";"zone.gp";"Est Cap";50;1;2
+"2021";"chasse sous-marine";"zone.gp";"nimp_ou";50;1;2
+"2021";"chasse sous-marine";"age_classe";"25-39";50;1;2
+"2021";"chasse sous-marine";"age_classe";"40-49";50;1;2
+"2021";"chasse sous-marine";"cat_pro.gp";"activite";100;2;2
+"2021";"chasse sous-marine";"nb_sort_an_cat";"Q1 (<=10)";50;1;2
+"2021";"chasse sous-marine";"nb_sort_an_cat";"Q4 (>=31)";50;1;2
+"2021";"chasse sous-marine";"classe_avis_pnm";"positif";100;2;2
+"2021";"chasse sous-marine";"poss_bat";"non";50;1;2
+"2021";"chasse sous-marine";"poss_bat";"oui";50;1;2
+"2021";"chasse sous-marine";"time.day.gp";"am";50;1;2
+"2021";"chasse sous-marine";"time.day.gp";"nimp_q";50;1;2
+"2021";"chasse sous-marine";"dep.mod_peche.chr";"entre 1000-2000 euros";50;1;2
+"2021";"chasse sous-marine";"dep.mod_peche.chr";"entre 500-1000 euros";50;1;2
+"2021";"peche du bord";"a";"2021";100;21;21
+"2021";"peche du bord";"mod_peche";"peche du bord";100;21;21
+"2021";"peche du bord";"sexe";"homme";100;21;21
+"2021";"peche du bord";"res_tour";"occasionnel";9,52380952380952;2;21
+"2021";"peche du bord";"res_tour";"resident";85,7142857142857;18;21
+"2021";"peche du bord";"res_tour";"secondaire";4,76190476190476;1;21
+"2021";"peche du bord";"Temps_peche_estime.cat2h";"<2h";9,52380952380952;2;21
+"2021";"peche du bord";"Temps_peche_estime.cat2h";">=2h";90,4761904761905;19;21
+"2021";"peche du bord";"zone.gp";"Est Cap";47,6190476190476;10;21
+"2021";"peche du bord";"zone.gp";"nimp_ou";19,047619047619;4;21
+"2021";"peche du bord";"zone.gp";"Ouest Cap";19,047619047619;4;21
+"2021";"peche du bord";"zone.gp";"Saint-Florent";14,2857142857143;3;21
+"2021";"peche du bord";"age_classe";"25-39";14,2857142857143;3;21
+"2021";"peche du bord";"age_classe";"40-49";28,5714285714286;6;21
+"2021";"peche du bord";"age_classe";"50-59";52,3809523809524;11;21
+"2021";"peche du bord";"age_classe";"60-69";4,76190476190476;1;21
+"2021";"peche du bord";"cat_pro.gp";"activite";50;10;20
+"2021";"peche du bord";"cat_pro.gp";"retraite";40;8;20
+"2021";"peche du bord";"cat_pro.gp";"sans_emploi-en_arret";10;2;20
+"2021";"peche du bord";"nb_sort_an_cat";"Q1 (<=10)";14,2857142857143;3;21
+"2021";"peche du bord";"nb_sort_an_cat";"Q2 (11-15)";33,3333333333333;7;21
+"2021";"peche du bord";"nb_sort_an_cat";"Q3 (16-30)";33,3333333333333;7;21
+"2021";"peche du bord";"nb_sort_an_cat";"Q4 (>=31)";19,047619047619;4;21
+"2021";"peche du bord";"classe_avis_pnm";"p_avis";10;2;20
+"2021";"peche du bord";"classe_avis_pnm";"positif";90;18;20
+"2021";"peche du bord";"poss_bat";"non";100;21;21
+"2021";"peche du bord";"time.day.gp";"am";42,8571428571429;9;21
+"2021";"peche du bord";"time.day.gp";"nimp_q";47,6190476190476;10;21
+"2021";"peche du bord";"time.day.gp";"pm";9,52380952380952;2;21
+"2021";"peche du bord";"dep.mod_peche.chr";"< 100 euros";28,5714285714286;6;21
+"2021";"peche du bord";"dep.mod_peche.chr";"entre 100-500 euros";42,8571428571429;9;21
+"2021";"peche du bord";"dep.mod_peche.chr";"entre 500-1000 euros";23,8095238095238;5;21
+"2021";"peche du bord";"dep.mod_peche.chr";"supérieur à 2000";4,76190476190476;1;21
+"2021";"peche à l'oursin";"a";"2021";100;1;1
+"2021";"peche à l'oursin";"mod_peche";"peche à l'oursin";100;1;1
+"2021";"peche à l'oursin";"sexe";"homme";100;1;1
+"2021";"peche à l'oursin";"res_tour";"resident";100;1;1
+"2021";"peche à l'oursin";"Temps_peche_estime.cat2h";"<2h";100;1;1
+"2021";"peche à l'oursin";"zone.gp";"Agriates";100;1;1
+"2021";"peche à l'oursin";"age_classe";"25-39";100;1;1
+"2021";"peche à l'oursin";"cat_pro.gp";"activite";100;1;1
+"2021";"peche à l'oursin";"nb_sort_an_cat";"Q1 (<=10)";100;1;1
+"2021";"peche à l'oursin";"classe_avis_pnm";"positif";100;1;1
+"2021";"peche à l'oursin";"poss_bat";"non";100;1;1
+"2021";"peche à l'oursin";"time.day.gp";"nimp_q";100;1;1
+"2021";"peche à l'oursin";"dep.mod_peche.chr";"< 100 euros";100;1;1
+"2022";"peche à l'oursin";"a";"2022";100;1;1
+"2022";"peche à l'oursin";"mod_peche";"peche à l'oursin";100;1;1
+"2022";"peche à l'oursin";"sexe";"femme";100;1;1
+"2022";"peche à l'oursin";"res_tour";"resident";100;1;1
+"2022";"peche à l'oursin";"Temps_peche_estime.cat2h";"<2h";100;1;1
+"2022";"peche à l'oursin";"zone.gp";"nimp_ou";100;1;1
+"2022";"peche à l'oursin";"age_classe";"50-59";100;1;1
+"2022";"peche à l'oursin";"cat_pro.gp";"activite";100;1;1
+"2022";"peche à l'oursin";"nb_sort_an_cat";"Q4 (>=31)";100;1;1
+"2022";"peche à l'oursin";"classe_avis_pnm";"p_avis";100;1;1
+"2022";"peche à l'oursin";"poss_bat";"non";100;1;1
+"2022";"peche à l'oursin";"time.day.gp";"am";100;1;1
+"2022";"peche à l'oursin";"dep.mod_peche.chr";"< 100 euros";100;1;1
+"2022";"peche du bord";"a";"2022";100;29;29
+"2022";"peche du bord";"mod_peche";"peche du bord";100;29;29
+"2022";"peche du bord";"sexe";"femme";3,44827586206897;1;29
+"2022";"peche du bord";"sexe";"homme";96,551724137931;28;29
+"2022";"peche du bord";"res_tour";"occasionnel";3,44827586206897;1;29
+"2022";"peche du bord";"res_tour";"resident";75,8620689655172;22;29
+"2022";"peche du bord";"res_tour";"secondaire";10,3448275862069;3;29
+"2022";"peche du bord";"res_tour";"touriste";10,3448275862069;3;29
+"2022";"peche du bord";"Temps_peche_estime.cat2h";"<2h";20,6896551724138;6;29
+"2022";"peche du bord";"Temps_peche_estime.cat2h";">=2h";79,3103448275862;23;29
+"2022";"peche du bord";"zone.gp";"Agriates";3,44827586206897;1;29
+"2022";"peche du bord";"zone.gp";"Est Cap";31,0344827586207;9;29
+"2022";"peche du bord";"zone.gp";"nimp_ou";48,2758620689655;14;29
+"2022";"peche du bord";"zone.gp";"Ouest Cap";6,89655172413793;2;29
+"2022";"peche du bord";"zone.gp";"Saint-Florent";10,3448275862069;3;29
+"2022";"peche du bord";"age_classe";"13-24";6,89655172413793;2;29
+"2022";"peche du bord";"age_classe";"25-39";31,0344827586207;9;29
+"2022";"peche du bord";"age_classe";"40-49";27,5862068965517;8;29
+"2022";"peche du bord";"age_classe";"50-59";13,7931034482759;4;29
+"2022";"peche du bord";"age_classe";"60-69";3,44827586206897;1;29
+"2022";"peche du bord";"age_classe";"70 et plus";17,2413793103448;5;29
+"2022";"peche du bord";"cat_pro.gp";"activite";72,4137931034483;21;29
+"2022";"peche du bord";"cat_pro.gp";"etudiant";6,89655172413793;2;29
+"2022";"peche du bord";"cat_pro.gp";"retraite";17,2413793103448;5;29
+"2022";"peche du bord";"cat_pro.gp";"sans_emploi-en_arret";3,44827586206897;1;29
+"2022";"peche du bord";"nb_sort_an_cat";"Q1 (<=10)";6,89655172413793;2;29
+"2022";"peche du bord";"nb_sort_an_cat";"Q2 (11-15)";6,89655172413793;2;29
+"2022";"peche du bord";"nb_sort_an_cat";"Q3 (16-30)";13,7931034482759;4;29
+"2022";"peche du bord";"nb_sort_an_cat";"Q4 (>=31)";72,4137931034483;21;29
+"2022";"peche du bord";"classe_avis_pnm";"negatif";3,44827586206897;1;29
+"2022";"peche du bord";"classe_avis_pnm";"p_avis";41,3793103448276;12;29
+"2022";"peche du bord";"classe_avis_pnm";"positif";55,1724137931034;16;29
+"2022";"peche du bord";"poss_bat";"non";89,6551724137931;26;29
+"2022";"peche du bord";"poss_bat";"oui";10,3448275862069;3;29
+"2022";"peche du bord";"time.day.gp";"am";3,44827586206897;1;29
+"2022";"peche du bord";"time.day.gp";"nimp_q";86,2068965517241;25;29
+"2022";"peche du bord";"time.day.gp";"nuit";3,44827586206897;1;29
+"2022";"peche du bord";"time.day.gp";"pm";6,89655172413793;2;29
+"2022";"peche du bord";"dep.mod_peche.chr";"< 100 euros";17,2413793103448;5;29
+"2022";"peche du bord";"dep.mod_peche.chr";"entre 100-500 euros";55,1724137931034;16;29
+"2022";"peche du bord";"dep.mod_peche.chr";"entre 500-1000 euros";24,1379310344828;7;29
+"2022";"peche du bord";"dep.mod_peche.chr";"supérieur à 2000";3,44827586206897;1;29
+"2022";"peche embarquée";"a";"2022";100;52;52
+"2022";"peche embarquée";"mod_peche";"peche embarquée";100;52;52
+"2022";"peche embarquée";"sexe";"femme";3,84615384615385;2;52
+"2022";"peche embarquée";"sexe";"homme";96,1538461538462;50;52
+"2022";"peche embarquée";"res_tour";"resident";73,0769230769231;38;52
+"2022";"peche embarquée";"res_tour";"secondaire";5,76923076923077;3;52
+"2022";"peche embarquée";"res_tour";"touriste";21,1538461538462;11;52
+"2022";"peche embarquée";"Temps_peche_estime.cat2h";"<2h";3,84615384615385;2;52
+"2022";"peche embarquée";"Temps_peche_estime.cat2h";">=2h";96,1538461538462;50;52
+"2022";"peche embarquée";"zone.gp";"Agriates";1,92307692307692;1;52
+"2022";"peche embarquée";"zone.gp";"Est Cap";15,3846153846154;8;52
+"2022";"peche embarquée";"zone.gp";"nimp_ou";59,6153846153846;31;52
+"2022";"peche embarquée";"zone.gp";"Nord Cap";7,69230769230769;4;52
+"2022";"peche embarquée";"zone.gp";"Ouest Cap";13,4615384615385;7;52
+"2022";"peche embarquée";"zone.gp";"Saint-Florent";1,92307692307692;1;52
+"2022";"peche embarquée";"age_classe";"25-39";3,92156862745098;2;51
+"2022";"peche embarquée";"age_classe";"40-49";17,6470588235294;9;51
+"2022";"peche embarquée";"age_classe";"50-59";19,6078431372549;10;51
+"2022";"peche embarquée";"age_classe";"60-69";39,2156862745098;20;51
+"2022";"peche embarquée";"age_classe";"70 et plus";19,6078431372549;10;51
+"2022";"peche embarquée";"cat_pro.gp";"activite";44,2307692307692;23;52
+"2022";"peche embarquée";"cat_pro.gp";"retraite";48,0769230769231;25;52
+"2022";"peche embarquée";"cat_pro.gp";"sans_emploi-en_arret";7,69230769230769;4;52
+"2022";"peche embarquée";"nb_sort_an_cat";"Q1 (<=10)";38,4615384615385;20;52
+"2022";"peche embarquée";"nb_sort_an_cat";"Q2 (11-15)";9,61538461538462;5;52
+"2022";"peche embarquée";"nb_sort_an_cat";"Q3 (16-30)";38,4615384615385;20;52
+"2022";"peche embarquée";"nb_sort_an_cat";"Q4 (>=31)";13,4615384615385;7;52
+"2022";"peche embarquée";"classe_avis_pnm";"negatif";1,92307692307692;1;52
+"2022";"peche embarquée";"classe_avis_pnm";"p_avis";9,61538461538462;5;52
+"2022";"peche embarquée";"classe_avis_pnm";"positif";88,4615384615385;46;52
+"2022";"peche embarquée";"poss_bat";"non";5,76923076923077;3;52
+"2022";"peche embarquée";"poss_bat";"oui";94,2307692307692;49;52
+"2022";"peche embarquée";"time.day.gp";"am";48,0769230769231;25;52
+"2022";"peche embarquée";"time.day.gp";"nimp_q";50;26;52
+"2022";"peche embarquée";"time.day.gp";"pm";1,92307692307692;1;52
+"2022";"peche embarquée";"dep.mod_peche.chr";"< 100 euros";15,6862745098039;8;51
+"2022";"peche embarquée";"dep.mod_peche.chr";"entre 100-500 euros";15,6862745098039;8;51
+"2022";"peche embarquée";"dep.mod_peche.chr";"entre 1000-2000 euros";15,6862745098039;8;51
+"2022";"peche embarquée";"dep.mod_peche.chr";"entre 500-1000 euros";7,84313725490196;4;51
+"2022";"peche embarquée";"dep.mod_peche.chr";"supérieur à 2000";45,0980392156863;23;51
+"2022";"chasse sous-marine";"a";"2022";100;3;3
+"2022";"chasse sous-marine";"mod_peche";"chasse sous-marine";100;3;3
+"2022";"chasse sous-marine";"sexe";"homme";100;3;3
+"2022";"chasse sous-marine";"res_tour";"resident";66,6666666666667;2;3
+"2022";"chasse sous-marine";"res_tour";"touriste";33,3333333333333;1;3
+"2022";"chasse sous-marine";"Temps_peche_estime.cat2h";"<2h";33,3333333333333;1;3
+"2022";"chasse sous-marine";"Temps_peche_estime.cat2h";">=2h";66,6666666666667;2;3
+"2022";"chasse sous-marine";"zone.gp";"nimp_ou";100;3;3
+"2022";"chasse sous-marine";"age_classe";"13-24";33,3333333333333;1;3
+"2022";"chasse sous-marine";"age_classe";"40-49";66,6666666666667;2;3
+"2022";"chasse sous-marine";"cat_pro.gp";"activite";66,6666666666667;2;3
+"2022";"chasse sous-marine";"cat_pro.gp";"etudiant";33,3333333333333;1;3
+"2022";"chasse sous-marine";"nb_sort_an_cat";"Q1 (<=10)";66,6666666666667;2;3
+"2022";"chasse sous-marine";"nb_sort_an_cat";"Q4 (>=31)";33,3333333333333;1;3
+"2022";"chasse sous-marine";"classe_avis_pnm";"positif";100;3;3
+"2022";"chasse sous-marine";"poss_bat";"non";33,3333333333333;1;3
+"2022";"chasse sous-marine";"poss_bat";"oui";66,6666666666667;2;3
+"2022";"chasse sous-marine";"time.day.gp";"am";33,3333333333333;1;3
+"2022";"chasse sous-marine";"time.day.gp";"nimp_q";33,3333333333333;1;3
+"2022";"chasse sous-marine";"time.day.gp";"pm";33,3333333333333;1;3
+"2022";"chasse sous-marine";"dep.mod_peche.chr";"entre 100-500 euros";33,3333333333333;1;3
+"2022";"chasse sous-marine";"dep.mod_peche.chr";"entre 500-1000 euros";66,6666666666667;2;3
+"2023";"peche embarquée";"a";"2023";100;20;20
+"2023";"peche embarquée";"mod_peche";"peche embarquée";100;20;20
+"2023";"peche embarquée";"sexe";"femme";10;2;20
+"2023";"peche embarquée";"sexe";"homme";90;18;20
+"2023";"peche embarquée";"res_tour";"resident";75;15;20
+"2023";"peche embarquée";"res_tour";"secondaire";10;2;20
+"2023";"peche embarquée";"res_tour";"touriste";15;3;20
+"2023";"peche embarquée";"Temps_peche_estime.cat2h";">=2h";100;20;20
+"2023";"peche embarquée";"zone.gp";"Agriates";5,26315789473684;1;19
+"2023";"peche embarquée";"zone.gp";"Est Cap";21,0526315789474;4;19
+"2023";"peche embarquée";"zone.gp";"nimp_ou";73,6842105263158;14;19
+"2023";"peche du bord";"a";"2023";100;131;131
+"2023";"peche du bord";"mod_peche";"peche du bord";100;131;131
+"2023";"peche du bord";"sexe";"femme";3,05343511450382;4;131
+"2023";"peche du bord";"sexe";"homme";96,9465648854962;127;131
+"2023";"peche du bord";"res_tour";"occasionnel";0,763358778625954;1;131
+"2023";"peche du bord";"res_tour";"resident";68,7022900763359;90;131
+"2023";"peche du bord";"res_tour";"secondaire";2,29007633587786;3;131
+"2023";"peche du bord";"res_tour";"touriste";28,2442748091603;37;131
+"2023";"peche du bord";"Temps_peche_estime.cat2h";"<2h";13,7404580152672;18;131
+"2023";"peche du bord";"Temps_peche_estime.cat2h";">=2h";86,2595419847328;113;131
+"2023";"peche du bord";"zone.gp";"Est Cap";48,8549618320611;64;131
+"2023";"peche du bord";"zone.gp";"nimp_ou";34,3511450381679;45;131
+"2023";"peche du bord";"zone.gp";"Ouest Cap";2,29007633587786;3;131
+"2023";"peche du bord";"zone.gp";"Saint-Florent";14,5038167938931;19;131
+"2023";"chasse sous-marine";"a";"2023";100;21;21
+"2023";"chasse sous-marine";"mod_peche";"chasse sous-marine";100;21;21
+"2023";"chasse sous-marine";"sexe";"femme";9,52380952380952;2;21
+"2023";"chasse sous-marine";"sexe";"homme";90,4761904761905;19;21
+"2023";"chasse sous-marine";"res_tour";"resident";47,6190476190476;10;21
+"2023";"chasse sous-marine";"res_tour";"secondaire";14,2857142857143;3;21
+"2023";"chasse sous-marine";"res_tour";"touriste";38,0952380952381;8;21
+"2023";"chasse sous-marine";"Temps_peche_estime.cat2h";"<2h";28,5714285714286;6;21
+"2023";"chasse sous-marine";"Temps_peche_estime.cat2h";">=2h";71,4285714285714;15;21
+"2023";"chasse sous-marine";"zone.gp";"Est Cap";52,3809523809524;11;21
+"2023";"chasse sous-marine";"zone.gp";"nimp_ou";42,8571428571429;9;21
+"2023";"chasse sous-marine";"zone.gp";"Nord Cap";4,76190476190476;1;21
+"2024";"peche du bord";"a";"2024";100;76;76
+"2024";"peche du bord";"mod_peche";"peche du bord";100;76;76
+"2024";"peche du bord";"sexe";"femme";2,63157894736842;2;76
+"2024";"peche du bord";"sexe";"homme";97,3684210526316;74;76
+"2024";"peche du bord";"res_tour";"resident";97,3684210526316;74;76
+"2024";"peche du bord";"res_tour";"touriste";2,63157894736842;2;76
+"2024";"peche du bord";"Temps_peche_estime.cat2h";"<2h";7,89473684210526;6;76
+"2024";"peche du bord";"Temps_peche_estime.cat2h";">=2h";92,1052631578947;70;76
+"2024";"peche du bord";"zone.gp";"Agriates";1,31578947368421;1;76
+"2024";"peche du bord";"zone.gp";"Est Cap";19,7368421052632;15;76
+"2024";"peche du bord";"zone.gp";"nimp_ou";25;19;76
+"2024";"peche du bord";"zone.gp";"Ouest Cap";1,31578947368421;1;76
+"2024";"peche du bord";"zone.gp";"Saint-Florent";52,6315789473684;40;76
+"2024";"peche embarquée";"a";"2024";100;5;5
+"2024";"peche embarquée";"mod_peche";"peche embarquée";100;5;5
+"2024";"peche embarquée";"sexe";"homme";100;5;5
+"2024";"peche embarquée";"res_tour";"resident";80;4;5
+"2024";"peche embarquée";"res_tour";"touriste";20;1;5
+"2024";"peche embarquée";"Temps_peche_estime.cat2h";"<2h";20;1;5
+"2024";"peche embarquée";"Temps_peche_estime.cat2h";">=2h";80;4;5
+"2024";"peche embarquée";"zone.gp";"Est Cap";40;2;5
+"2024";"peche embarquée";"zone.gp";"nimp_ou";20;1;5
+"2024";"peche embarquée";"zone.gp";"Nord Cap";20;1;5
+"2024";"peche embarquée";"zone.gp";"Saint-Florent";20;1;5
+"2024";"chasse sous-marine";"a";"2024";100;1;1
+"2024";"chasse sous-marine";"mod_peche";"chasse sous-marine";100;1;1
+"2024";"chasse sous-marine";"sexe";"homme";100;1;1
+"2024";"chasse sous-marine";"res_tour";"touriste";100;1;1
+"2024";"chasse sous-marine";"Temps_peche_estime.cat2h";">=2h";100;1;1
+"2024";"chasse sous-marine";"zone.gp";"Est Cap";100;1;1

@@ -1,0 +1,1 @@
+ln[P(mod_peche=2)/P(mod_peche=1)] = 0 + 0.55*a2021 + 0.47*a2022 + 0.69*a2023 + 0.13*a2024 + 0.43*res_tourresident + 0.53*Temps_peche_estime.cat2h>=2h + 3282900.85*zone.gpEst-Nord Cap + 4915391.41*zone.gpnimp_ou + 1422999.99*zone.gpOuest-Nord Cap
